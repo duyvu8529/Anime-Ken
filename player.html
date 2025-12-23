@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Anime Player - Xem Anime</title>
+<style>
+/* (kept original CSS largely unchanged) */
+body { background:#0b0f17; margin:0; padding:0; color:#fff; font-family:"Segoe UI", Roboto, Arial, sans-serif; }
+.container { width:92%; margin:15px auto 40px; }
+.notice-box { background:linear-gradient(45deg,#18c964,#1fd46d); padding:18px; border-radius:16px; color:#fff; font-size:17px; display:flex; gap:12px; align-items:flex-start; margin-bottom:20px;}
+.notice-box .icon{ font-size:30px; }
+.btn-wrap { margin:15px 0; text-align:center; }
+.like-btn, .share-btn { background:#1877f2; padding:10px 18px; border-radius:12px; margin-right:10px; border:none; color:#fff; font-weight:600; cursor:pointer; font-size:15px;}
+.share-btn{ background:#4267b2; }
+.video-wrapper { position:relative; width:100%; border-radius:20px; overflow:hidden; background:#000; margin-bottom:10px; box-shadow:0 0 25px rgba(0,0,0,.6); }
+#animeVideo { width:100%; height:auto; display:block; background:black; }
+.video-controls { position:absolute; left:0; bottom:0; width:100%; padding:10px; background: linear-gradient(to top, rgba(0,0,0,0.75), transparent); transition: opacity .25s; display:flex; align-items:center; gap:10px; }
+.hide-controls { opacity:0; pointer-events:none; }
+.control-left { display:flex; gap:8px; align-items:center; }
+.control-mid { flex:1; display:flex; flex-direction:column; gap:6px; }
+.control-right { display:flex; gap:8px; align-items:center; }
+.video-controls button { background:none; border:none; color:white; font-size:22px; cursor:pointer; }
+.timeline { -webkit-appearance:none; width:100%; height:6px; background:#444; border-radius:6px; outline:none;}
+.timeline::-webkit-slider-thumb { -webkit-appearance:none; width:12px; height:12px; border-radius:50%; background:#ff3b3b; cursor:pointer; }
+.vol-range { width:110px; -webkit-appearance:none; height:6px; background:#444; border-radius:6px; }
+.vol-range::-webkit-slider-thumb { -webkit-appearance:none; width:12px; height:12px; border-radius:50%; background:#fff; cursor:pointer; }
+.time-text { font-size:13px; color:#e6e6e6; }
+.tap-zone { position:absolute; top:0; height:100%; width:50%; }
+.left-zone{ left:0; } .right-zone{ right:0; }
+.tap-feedback { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:42px; color:white; pointer-events:none; opacity:0; transition: all .25s; text-shadow:0 4px 18px rgba(0,0,0,.6); }
+.ep-title { font-size:20px; margin:10px 0; font-weight:bold; }
+.ep-list.grid { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-bottom:30px; }
+.ep-list.scroll { display:flex; gap:10px; overflow-x:auto; padding-bottom:8px; -webkit-overflow-scrolling:touch; scroll-behavior:smooth; margin-bottom:18px; }
+.ep-list.scroll .episode-btn { min-width:72px; flex:0 0 auto; white-space:nowrap; }
+.ep-scroll-wrap { position:relative; }
+.ep-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.45); border-radius:8px; width:36px; height:36px; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:6; color:#fff; font-size:20px; user-select:none; }
+.ep-nav.left { left:6px; }
+.ep-nav.right { right:6px; }
+.episode-btn { background:#1a1a1a; padding:13px 0; border-radius:12px; text-align:center; cursor:pointer; border:1px solid #2a2a2a; color:#fff; user-select:none; transition:.15s; }
+.episode-btn:hover{ background:#292929; }
+.active-ep{ background:#e53935!important; border-color:#ff6961!important; font-weight:700; }
+.poster { width:65%; max-width:240px; border-radius:16px; display:block; margin:0 auto 15px auto; }
+.description { background:#111a22; padding:18px; border-radius:16px; margin-bottom:18px; }
+.title-main{ font-size:26px; font-weight:700; text-align:center; margin-bottom:6px; }
+.title-sub{ text-align:center; opacity:.75; margin-bottom:12px; }
+.info-box{ background:#122233; padding:18px; border-radius:16px; margin-top:10px; color:#cfeaff; }
+@media (max-width:720px){ .ep-list.grid{ grid-template-columns:repeat(3,1fr); } .vol-range{ width:80px; } .ep-list.scroll .episode-btn { min-width:62px; } }
+.video-loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.35); z-index: 9; opacity: 0; pointer-events: none; transition: opacity .25s; }
+.video-loading.active { opacity: 1; pointer-events: auto; }
+.video-loading .spinner { width: 56px; height: 56px; border: 6px solid rgba(255,255,255,.3); border-top-color: #ff3b3b; border-radius: 50%; animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.watch-status { display:block; margin:8px 0 14px 0; background: rgba(255,255,255,0.03); padding:8px 12px; border-radius:10px; color:#e6e6e6; font-size:14px; }
+.vip-box { display:flex; gap:10px; align-items:center; margin-bottom:10px; padding:8px 12px; border-radius:10px; background:linear-gradient(90deg,#ffd54a,#ffb84d); color:#222; font-weight:700; }
+.vip-box .label { font-weight:800; margin-right:8px; }
+.rules-box { background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.04); padding:14px; border-radius:12px; margin:12px 0; color:#e6e6e6; }
+.rules-box h3{ margin:0 0 8px 0; font-size:16px; color:#fff; }
+.rules-box ul{ margin-left:18px; color:#dbefff; }
+.rules-box li{ margin:6px 0; line-height:1.35; }
+.rules-accept{ display:flex; gap:8px; align-items:center; margin-top:10px; }
+#playerToast { position: fixed; left:50%; transform:translateX(-50%); bottom:22px; background: rgba(0,0,0,0.8); color:#fff; padding:10px 14px; border-radius:8px; display:none; z-index:9999; font-size:14px; }
+
+/* ===== SEARCH STYLES ===== */
+.search-wrap { margin:14px auto 6px; max-width:1200px; width:92%; display:flex; gap:12px; align-items:flex-start; }
+/* place coin above search: wrapper */
+.coin-top-wrap { width:92%; max-width:1200px; margin:12px auto 0; display:flex; justify-content:flex-end; padding-right:4%; box-sizing:border-box; }
+/* search bar remains */
+.search-bar { display:flex; gap:8px; align-items:center; background:#0f1113; border:1px solid rgba(255,255,255,0.04); padding:10px; border-radius:12px; flex:1; }
+.search-bar input { flex:1; background:transparent; border:none; outline:none; color:#fff; font-size:15px; padding:6px 6px; }
+.search-bar .clear-btn { background:transparent; border:1px solid rgba(255,255,255,0.04); padding:6px 8px; border-radius:8px; color:#fff; cursor:pointer; }
+.search-results { margin:10px auto 18px; display:grid; grid-template-columns:repeat(auto-fill, minmax(170px, 1fr)); gap:12px; width:100%; max-width:1200px; box-sizing:border-box; padding:0 6px; }
+.result-card { background:#0b0c0d; padding:8px; border-radius:10px; border:1px solid rgba(255,255,255,0.03); cursor:pointer; transition:transform .12s, box-shadow .12s; display:flex; gap:8px; align-items:center; }
+.result-card:hover { transform:translateY(-6px); box-shadow:0 10px 30px rgba(0,0,0,0.6); }
+.result-card img { width:56px; height:80px; object-fit:cover; border-radius:6px; flex-shrink:0; }
+.result-meta { color:#ddd; font-size:13px; }
+.result-meta .r-title { font-weight:700; color:#fff; margin-bottom:4px; }
+.result-meta .r-sub { color:#9aa; font-size:12px; }
+.results-empty { color:#9aa; padding:12px; background:#0b0c0d; border-radius:10px; border:1px solid rgba(255,255,255,0.02); }
+.coin-chip { display:flex; align-items:center; gap:8px; background:linear-gradient(90deg,#ffd5a8,#ffe7c9); color:#222; padding:8px 10px; border-radius:12px; font-weight:700; min-width:92px; justify-content:center; cursor:pointer; position:relative; }
+
+/* floating +xu animation */
+.coin-float {
+  position:absolute;
+  right:10px;
+  top:-10px;
+  background:rgba(0,0,0,0.85);
+  color:#fff;
+  padding:6px 8px;
+  border-radius:8px;
+  font-weight:800;
+  transform:translateY(0);
+  opacity:1;
+  transition: transform .9s cubic-bezier(.2,.9,.2,1), opacity .9s;
+  pointer-events:none;
+  font-size:13px;
+  z-index:40;
+}
+
+/* watched episode style (new) */
+.episode-btn.watched-ep {
+  background: linear-gradient(180deg,#1b5e20,#2e7d32);
+  border-color:#43a047;
+  color:#fff;
+  font-weight:700;
+}
+
+/* modals */
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:120}
+.modal{background:#fff;padding:18px;border-radius:10px;width:420px;max-width:96%}
+.modal h3{margin-bottom:8px;font-size:18px}
+.modal .row{margin-bottom:10px}
+.modal input[type=text]{width:100%;padding:8px;border:1px solid #ddd;border-radius:8px}
+.copy-btn{background:#2b6cb0;color:#fff;padding:6px 10px;border-radius:8px;border:none;cursor:pointer}
+</style>
+</head>
+<body>
+
+<!-- COIN top (moved above search) -->
+<div class="coin-top-wrap">
+  <div id="coinChip" class="coin-chip" title="Số xu hiện có">🪙 <span id="coinValue">0</span></div>
+</div>
+
+<!-- SEARCH -->
+<div class="search-wrap">
+  <div class="search-bar" role="search" aria-label="Tìm anime nhanh">
+    <input id="globalSearchInput" placeholder="Tìm anime khác... (ví dụ: Your Name, Project Sekai)" autocomplete="off" />
+    <button id="clearSearch" class="clear-btn" title="Xóa">✕</button>
+  </div>
+</div>
+
+<div id="searchResults" class="search-results" aria-live="polite"></div>
+
+<div class="container">
+
+  <div id="scheduleBox" class="notice-box" style="display:none;">
+    <div class="icon">📅</div>
+    <div id="scheduleText"></div>
+  </div>
+
+  <div class="video-wrapper">
+    <video id="animeVideo" preload="metadata" playsinline controlslist="nodownload">
+      <source id="videoSource" src="" type="video/mp4">
+      Trình duyệt của bạn không hỗ trợ thẻ video.
+    </video>
+    <div id="videoLoading" class="video-loading"><div class="spinner"></div></div>
+
+    <div class="tap-zone left-zone" id="leftTap"></div>
+    <div class="tap-zone right-zone" id="rightTap"></div>
+    <div id="tapFx" class="tap-feedback"></div>
+
+    <div id="controls" class="video-controls">
+      <div class="control-left">
+        <button id="playBtn" title="Play/Pause">▶️</button>
+      </div>
+      <div class="control-mid">
+        <input id="timeline" class="timeline" type="range" min="0" value="0" step="0.1">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div class="time-text"><span id="currentTime">0:00</span> / <span id="totalTime">0:00</span></div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <button id="volBtn" title="Mute/Unmute">🔊</button>
+            <input id="volume" class="vol-range" type="range" min="0" max="1" step="0.01" value="1">
+            <button id="fullBtn" title="Fullscreen">⛶</button>
+          </div>
+        </div>
+      </div>
+      <div class="control-right" style="min-width:80px;justify-content:flex-end;"></div>
+    </div>
+  </div>
+
+  <div id="vipBox" class="vip-box" style="display:none">
+    <div class="label">👑 VIP</div>
+    <div>Thời gian còn lại: <span id="vipRemain">00:00</span></div>
+  </div>
+  <div id="watchStatus" class="watch-status" style="display:none">Đã xem: 0:00 / Cần: 0:00 — Trạng thái: Đang chờ</div>
+
+  <div class="btn-wrap">
+    <button class="like-btn" id="likeBtn">👍 Thích 0</button>
+    <button class="share-btn" id="shareBtn">📤 Chia sẻ</button>
+  </div>
+
+  <div class="rules-box" id="rulesBox">
+    <h3>Quy tắc xem để nhận xu</h3>
+    <ul>
+      <li>Mỗi tập phải xem đủ thời gian yêu cầu (xem phần "Đã xem / Cần" để biết) mới được cộng xu.</li>
+      <li>Khi tua, <strong>mỗi lần tua trước</strong> không được vượt quá <strong>4 phút</strong>. Bạn vẫn có thể tua nhưng khuyến khích chỉ tua phần <strong>opening</strong> và <strong>ending</strong>.</li>
+      <li>Nếu tua quá nhiều (tổng tua tiến > 4 phút) hoặc tua quá lớn một lần, bạn sẽ bị <strong>bị loại</strong> (không nhận xu cho tập đó).</li>
+      <li>Phân loại & số xu:</li>
+      <ul>
+        <li>Tập (khoảng 24–25 phút): không VIP = <strong>30 xu</strong>, có VIP = <strong>50 xu</strong>.</li>
+        <li>Movie (≥ 1:00:00): không VIP = <strong>50 xu</strong>, có VIP = <strong>100 xu</strong>.</li>
+      </ul>
+      <li>Số liệu duration lấy từ <strong>data.json</strong> để xác định (hoặc từ metadata video nếu data.json không có).</li>
+    </ul>
+
+    <div class="rules-accept">
+      <input type="checkbox" id="acceptRules" /> <label for="acceptRules">Tôi đã đọc và đồng ý tuân thủ quy tắc để nhận xu</label>
+    </div>
+  </div>
+
+  <div class="ep-title">Danh sách tập</div>
+
+  <div class="ep-scroll-wrap" id="epScrollWrap">
+    <div id="prevEpNav" class="ep-nav left" style="display:none">‹</div>
+    <div id="episodeList" class="ep-list grid"></div>
+    <div id="nextEpNav" class="ep-nav right" style="display:none">›</div>
+  </div>
+
+  <img id="poster" class="poster" src="" alt="Poster">
+  <h1 id="animeTitle" class="title-main"></h1>
+  <div id="animeSubtitle" class="title-sub"></div>
+  <div id="animeDescription" class="description"></div>
+  <div class="info-box">• Xem lịch chiếu anime khác <a href="#" style="color:#3ab4ff">tại đây</a></div>
+</div>
+
+<div id="playerToast"></div>
+
+<!-- BUY / ENTER / VIP MODALS -->
+<div class="modal-backdrop" id="buyModal">
+  <div class="modal">
+    <h3>Mua code VIP</h3>
+    <div class="row" style="color:#444">Mỗi mã kích hoạt VIP có thể có thời lượng khác nhau. Mua sẽ trừ <strong id="modalCost">100</strong> xu.</div>
+
+    <div style="display:flex;gap:8px;margin-bottom:10px">
+      <button id="confirmBuy" class="copy-btn" style="background:#ff7aa3;color:#111;border:none;padding:8px 12px;border-radius:8px">Xác nhận mua (random)</button>
+      <button id="cancelBuy" class="copy-btn" style="background:#ddd;color:#111">Hủy</button>
+    </div>
+
+    <div id="buyResult" style="display:none">
+      <div class="row" style="color:#444">Mã bạn nhận được (đã chuyển vào "Mã đã mua"):</div>
+      <div style="display:flex;gap:8px;align-items:center;justify-content:space-between">
+        <div id="boughtCode" style="font-weight:700"></div>
+        <div style="display:flex;gap:8px">
+          <button id="copyBought" class="copy-btn">Sao chép</button>
+          <button id="gotoEnter" class="copy-btn" style="background:#fff;color:#111">Nhập mã</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="enterModal">
+  <div class="modal">
+    <h3>Nhập mã VIP</h3>
+    <div class="row">
+      <input id="codeInput" placeholder="Nhập mã... (vd VIP-XXXX-YYYY)" />
+    </div>
+    <div style="display:flex;gap:8px">
+      <button id="confirmEnter" class="copy-btn" style="background:#6fd36f;color:#111">Xác nhận</button>
+      <button id="cancelEnter" class="copy-btn">Hủy</button>
+    </div>
+    <div id="enterResult" class="row" style="display:none;margin-top:8px;color:#444"></div>
+    <div class="row" style="margin-top:8px;color:#444">
+      <strong>Mã đã mua:</strong> <span id="purchasedList">—</span>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="vipRequiredModal">
+  <div class="modal">
+    <h3>Phim này yêu cầu VIP</h3>
+    <div class="row" id="vipReqText" style="color:#444">Bạn cần kích hoạt VIP để xem bộ phim này.</div>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button id="vipReqBuy" class="copy-btn" style="background:#ff7aa3;color:#111">Mua mã</button>
+      <button id="vipReqEnter" class="copy-btn" style="background:#fff;color:#111">Nhập mã</button>
+      <button id="vipReqClose" class="copy-btn">Đóng</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------- Utilities ---------- */
+function fmtTime(sec){ if (!isFinite(sec)) return "0:00"; const m=Math.floor(sec/60); const s=String(Math.floor(sec%60)).padStart(2,"0"); return `${m}:${s}`; }
+function parseDurationToSeconds(s){
+  if(!s) return NaN;
+  const parts = String(s).split(':').map(p=>parseInt(p,10)||0);
+  if(parts.length===3) return parts[0]*3600 + parts[1]*60 + parts[2];
+  if(parts.length===2) return parts[0]*60 + parts[1];
+  return parseInt(parts[0])||NaN;
+}
+function showToast(txt, ms=1600){ const t=document.getElementById('playerToast'); t.innerText = txt; t.style.display='block'; clearTimeout(t._to); t._to = setTimeout(()=> t.style.display='none', ms); }
+function escapeHtml(s){ return (s+'').replace(/[&<>"']/g, function(m){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]; }); }
+
+/* ---------- Storage keys & config ---------- */
+const COIN_KEY = "user_coin_v1";
+const USED_CODES_KEY = "used_codes_v1";
+const PURCHASED_CODES_KEY = "purchased_codes_v1"; // primary: array of objects {code, durationMinutes}
+const VIP_KEY = "vip_code_v1";
+const VIP_COST = 100;
+const RULES_KEY = "accept_rules_v1";
+
+/* ---------- Rules acceptance ---------- */
+function hasAcceptedRules(){ return localStorage.getItem(RULES_KEY) === "true"; }
+function setAcceptedRules(val){ localStorage.setItem(RULES_KEY, val ? "true" : "false"); }
+
+/* ---------- VIP helpers (stacking) ---------- */
+function getVipObj(){ try{ return JSON.parse(localStorage.getItem(VIP_KEY)||"null"); }catch(e){ return null; } }
+function isVipActive(){ const v=getVipObj(); if(!v) return false; return Date.now() < (v.expire||0); }
+function vipRemainingMs(){ const v=getVipObj(); if(!v) return 0; return Math.max(0, (v.expire||0) - Date.now()); }
+function formatRemainMs(ms){ if(ms<=0) return "00:00"; const h = Math.floor(ms/3600000); const m = Math.floor((ms%3600000)/60000); const s = Math.floor((ms%60000)/1000); if(h>0) return `${h}h ${String(m).padStart(2,'0')}p`; return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`; }
+
+/* ---------- Purchased codes: normalize old & new formats ---------- */
+function getPurchasedCodes(){
+  try{
+    const raw = JSON.parse(localStorage.getItem(PURCHASED_CODES_KEY) || "[]");
+    // normalize: if array of strings => convert to objects (but don't overwrite storage here)
+    return raw.map(item=>{
+      if(!item) return null;
+      if(typeof item === 'string') return { code: item, durationMinutes: 60 };
+      if(typeof item === 'object' && item.code) return { code: item.code, durationMinutes: Number(item.durationMinutes) || 60 };
+      return null;
+    }).filter(Boolean);
+  }catch(e){
+    return [];
+  }
+}
+function writePurchasedCodes(arrOfObjects){
+  localStorage.setItem(PURCHASED_CODES_KEY, JSON.stringify(arrOfObjects || []));
+  localStorage.setItem('purchased_update_ts', String(Date.now()));
+}
+function addPurchasedCode(code, durationMinutes = 60){
+  if(!code) return;
+  const arr = getPurchasedCodes();
+  if(!arr.find(x=>x.code === code)){
+    arr.push({ code, durationMinutes: Number(durationMinutes) || 60 });
+    writePurchasedCodes(arr);
+  }
+}
+function removePurchasedCode(code){
+  let arr = getPurchasedCodes();
+  arr = arr.filter(c => c.code !== code);
+  writePurchasedCodes(arr);
+}
+
+/* ---------- Used codes ---------- */
+function getUsedCodes(){ try{return JSON.parse(localStorage.getItem(USED_CODES_KEY)||"[]"); }catch(e){return [];} }
+function markCodeUsed(code){ const used=getUsedCodes(); if(!used.includes(code)) used.push(code); localStorage.setItem(USED_CODES_KEY, JSON.stringify(used)); }
+
+/* ---------- Code generator ---------- */
+function randomSegment(len){
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const out = [];
+  const rnd = new Uint32Array(len);
+  window.crypto.getRandomValues(rnd);
+  for(let i=0;i<len;i++) out.push(chars[rnd[i] % chars.length]);
+  return out.join('');
+}
+function generateVipCode(){ return `VIP-${randomSegment(4)}-${randomSegment(4)}`; }
+
+/* ---------- Coins ---------- */
+function getCoin(){ return parseInt(localStorage.getItem(COIN_KEY)||"0",10); }
+function setCoin(v){ localStorage.setItem(COIN_KEY,String(v)); updateCoinUI(); }
+function addCoin(x){ setCoin(getCoin()+x); }
+function updateCoinUI(){ const el=document.getElementById("coinValue"); if(el) el.innerText = getCoin(); }
+
+/* pulse animation for coin chip when receive coins locally */
+function pulseCoin(amount){
+  try{
+    const chip = document.getElementById('coinChip');
+    if(!chip) return;
+    const fx = document.createElement('div');
+    fx.className = 'coin-float';
+    fx.innerText = `+${amount} xu`;
+    chip.appendChild(fx);
+    // animate up and fade
+    requestAnimationFrame(()=> {
+      fx.style.transform = 'translateY(-36px)';
+      fx.style.opacity = '0';
+    });
+    setTimeout(()=> { try{ fx.remove(); }catch(e){} }, 900);
+  }catch(e){}
+}
+
+/* ---------- Search (loads data.json lazily) ---------- */
+let GLOBAL_DB = null;
+const searchInput = document.getElementById('globalSearchInput');
+const clearSearch = document.getElementById('clearSearch');
+const resultsEl = document.getElementById('searchResults');
+let searchTimer = null;
+if (searchInput) searchInput.addEventListener('input', onSearchInput);
+if (clearSearch) clearSearch.addEventListener('click', ()=>{
+  searchInput.value = '';
+  renderSearchResults([]);
+  searchInput.focus();
+  resultsEl.scrollIntoView({behavior:'smooth', block:'start'});
+});
+function ensureGlobalDB(){
+  if(GLOBAL_DB) return Promise.resolve(GLOBAL_DB);
+  return fetch("data.json")
+    .then(r=>{ if(!r.ok) throw new Error("Cannot load data.json"); return r.json(); })
+    .then(db => { GLOBAL_DB = db || {}; return GLOBAL_DB; })
+    .catch(err => { GLOBAL_DB = GLOBAL_DB || {}; console.warn("data.json load failed", err); return GLOBAL_DB; });
+}
+function onSearchInput(){
+  const q = (searchInput.value||'').trim();
+  if(searchTimer) clearTimeout(searchTimer);
+  searchTimer = setTimeout(()=> { ensureGlobalDB().then(()=> doSearch(q)); }, 160);
+}
+function doSearch(q){
+  resultsEl.innerHTML = '';
+  if(!q || !GLOBAL_DB || Object.keys(GLOBAL_DB).length===0){ renderSearchResults([]); return; }
+  const qq = q.toLowerCase();
+  const all = Object.keys(GLOBAL_DB).map(k=>{
+    const obj = GLOBAL_DB[k] || {};
+    return { id:k, title:obj.title||"", subtitle:obj.subtitle||"", poster:obj.poster||obj.img||"", vip:!!obj.vip, uploadISO: obj.uploadISO||"" };
+  });
+  const matched = all.filter(a=>{
+    return (a.title && a.title.toLowerCase().includes(qq))
+      || (a.subtitle && a.subtitle.toLowerCase().includes(qq))
+      || (GLOBAL_DB[a.id].genre && GLOBAL_DB[a.id].genre.join(' ').toLowerCase().includes(qq));
+  }).slice(0,36);
+  renderSearchResults(matched);
+}
+function renderSearchResults(list){
+  resultsEl.innerHTML = '';
+  if(!list || list.length===0){
+    if(searchInput.value && searchInput.value.trim()!=='') resultsEl.innerHTML = `<div class="results-empty">Không tìm thấy kết quả cho "<strong>${escapeHtml(searchInput.value)}</strong>"</div>`;
+    return;
+  }
+  list.forEach(item=>{
+    const card = document.createElement('div');
+    card.className = 'result-card';
+    card.innerHTML = `<img src="${escapeHtml(item.poster||'')}" alt="${escapeHtml(item.title)}" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=&#39;http://www.w3.org/2000/svg&#39; width=&#39;120&#39; height=&#39;160&#39;><rect width=&#39;100%&#39; height=&#39;100%&#39; fill=&#39;%230b0c0d&#39;/><text x=50% y=50% fill=&#39;%239aa&#39; font-size=14 text-anchor=middle dominant-baseline=middle>no+thumb</text></svg>'">` +
+      `<div class="result-meta"><div class="r-title">${escapeHtml(item.title)}</div><div class="r-sub">${escapeHtml(item.uploadISO||'')} ${item.vip ? ' • 👑 VIP' : ''}</div></div>`;
+    card.onclick = ()=> {
+      if(item.vip && !isVipActive()){
+        showVipRequiredModalFor(item);
+        return;
+      }
+      // open watch/player page for that anime
+      location.href = `player.html?id=${encodeURIComponent(item.id)}`;
+    };
+    resultsEl.appendChild(card);
+  });
+}
+
+/* ---------- Load data.json & initialize player (same logic as before) ---------- */
+const params = new URLSearchParams(window.location.search);
+const animeId = params.get("id");
+const seasonIndex = parseInt(params.get("s")||"1",10)-1;
+let startEp = parseInt(params.get("ep")||"1",10)-1;
+if(isNaN(startEp) || startEp < 0) startEp = 0;
+
+fetch("data.json")
+.then(r => { if(!r.ok) throw new Error("Cannot load data.json"); return r.json(); })
+.then(db => {
+  GLOBAL_DB = db || {};
+  if(!animeId){ updateCoinUI(); return; }
+  const raw = GLOBAL_DB[animeId];
+  if(!raw) return alert("Anime không tồn tại: " + animeId);
+  const anime = JSON.parse(JSON.stringify(raw));
+  if (anime.seasons && anime.seasons.length > 0) {
+  if (!anime.seasons[seasonIndex]) return alert("Season không tồn tại");
+  const season = anime.seasons[seasonIndex];
+  anime.episodes = season.episodes || [];
+  anime._seasonId = season.name || `season${seasonIndex+1}`;
+  anime._seasonName = season.name || "";
+  // <-- MỚI: nếu season có poster riêng thì dùng poster của season (không đổi cấu trúc khác)
+  anime.poster = season.poster || anime.poster;
+} else {
+  // dùng cùng chuẩn với watch.html: nếu không có seasons => seasonId = data.name || "season1"
+  anime._seasonId = anime.name || `season1`;
+  anime._seasonName = anime.name || anime.subtitle || "";
+  if (!Array.isArray(anime.episodes)) anime.episodes = anime.episodes || [];
+
+  // --- migration: chuyển các key cũ *_single_* sang *_season1_* (nếu có)
+  // giúp cập nhật progress đã mark từ player cũ trước khi sửa
+  try{
+    const oldPrefix = `${anime.id}_single_`;
+    const newPrefix = `${anime.id}_${anime._seasonId}_`;
+    const epCount = (anime.episodes && anime.episodes.length) ? anime.episodes.length : 0;
+    for(let i=0;i<epCount;i++){
+      const keys = [
+        {old: oldPrefix + `watched_${i}`,      neo: newPrefix + `watched_${i}`},
+        {old: oldPrefix + `rewarded_${i}`,     neo: newPrefix + `rewarded_${i}`},
+        {old: oldPrefix + `highest_${i}`,      neo: newPrefix + `highest_${i}`},
+        {old: oldPrefix + `skip_total_${i}`,   neo: newPrefix + `skip_total_${i}`},
+        {old: oldPrefix + `time_ep_${i}`,      neo: newPrefix + `time_ep_${i}`}
+      ];
+      keys.forEach(k=>{
+        const v = localStorage.getItem(k.old);
+        if(v != null && localStorage.getItem(k.neo) == null){
+          localStorage.setItem(k.neo, v);
+        }
+      });
+    }
+    // trigger an update signal so other tab (watch.html) will refresh via storage event
+    localStorage.setItem('progress_migration_ts', String(Date.now()));
+  }catch(e){ console.warn("migration failed", e); }
+}
+setupPlayerFor(anime);
+})
+.catch(err => { console.error(err); alert("Lỗi load data.json: " + err.message); });
+
+/* ---------- Player setup (with robust resume/reload logic) ---------- */
+function setupPlayerFor(anime){
+  const video = document.getElementById("animeVideo");
+  const source = document.getElementById("videoSource");
+  const playBtn = document.getElementById("playBtn");
+  const timeline = document.getElementById("timeline");
+  const currentTimeEl = document.getElementById("currentTime");
+  const totalTimeEl = document.getElementById("totalTime");
+  const volBtn = document.getElementById("volBtn");
+  const volumeRange = document.getElementById("volume");
+  const fullBtn = document.getElementById("fullBtn");
+  const controls = document.getElementById("controls");
+  const leftTap = document.getElementById("leftTap");
+  const rightTap = document.getElementById("rightTap");
+  const posterEl = document.getElementById("poster");
+  const titleEl = document.getElementById("animeTitle");
+  const subtitleEl = document.getElementById("animeSubtitle");
+  const descEl = document.getElementById("animeDescription");
+  const scheduleBox = document.getElementById("scheduleBox");
+  const scheduleText = document.getElementById("scheduleText");
+  const epListEl = document.getElementById("episodeList");
+  const loadingEl = document.getElementById("videoLoading");
+  const watchStatusEl = document.getElementById("watchStatus");
+  const vipBoxEl = document.getElementById("vipBox");
+  const vipRemainEl = document.getElementById("vipRemain");
+  const prevNav = document.getElementById("prevEpNav");
+  const nextNav = document.getElementById("nextEpNav");
+  const acceptCheckbox = document.getElementById("acceptRules");
+
+  acceptCheckbox.checked = hasAcceptedRules();
+  acceptCheckbox.addEventListener('change', ()=> { setAcceptedRules(acceptCheckbox.checked); updateWatchStatusUI(); });
+
+  const KEY_EP = `${anime.id}_${anime._seasonId}_current_episode`;
+  const timeKey = i => `${anime.id}_${anime._seasonId}_time_ep_${i}`;
+  const highestKey = i => `${anime.id}_${anime._seasonId}_highest_${i}`;
+  const skipKey = i => `${anime.id}_${anime._seasonId}_skip_total_${i}`;
+  const rewardedKey = i => `${anime.id}_${anime._seasonId}_rewarded_${i}`;
+  const watchedKey = i => `${anime.id}_${anime._seasonId}_watched_${i}`; // NEW: mark watched
+
+  posterEl.src = anime.poster || "";
+  titleEl.innerText = anime.title || "";
+  subtitleEl.innerText = anime.subtitle || anime._seasonName || "";
+  descEl.innerText = anime.description || "";
+
+  if(anime.schedule?.hasSchedule){
+    scheduleText.innerText = `Tập ${anime.schedule.nextEpisode} — ${anime.schedule.nextDate}`;
+    scheduleBox.style.display="flex";
+  } else scheduleBox.style.display="none";
+
+  /* episodes */
+  epListEl.innerHTML = "";
+  const USE_SCROLL = (anime.episodes.length > 12);
+  if(USE_SCROLL){ epListEl.className = "ep-list scroll"; prevNav.style.display="flex"; nextNav.style.display="flex"; }
+  else { epListEl.className = "ep-list grid"; prevNav.style.display="none"; nextNav.style.display="none"; }
+
+  anime.episodes.forEach((epObj,i)=>{
+    const btn = document.createElement("div");
+    btn.className = "episode-btn";
+    btn.innerText = String(epObj.ep || (i+1)).padStart(2,"0");
+    btn.dataset.idx = String(i);
+    btn.onclick = ()=> loadEpisode(i,true);
+    // apply watched style if present
+    try{
+      if(localStorage.getItem(watchedKey(i)) === "true"){
+        btn.classList.add('watched-ep');
+      }
+    }catch(e){}
+    epListEl.appendChild(btn);
+  });
+  prevNav.onclick = ()=> epListEl.scrollBy({left:-260, behavior:'smooth'});
+  nextNav.onclick = ()=> epListEl.scrollBy({left:260, behavior:'smooth'});
+
+  const savedEp = parseInt(localStorage.getItem(KEY_EP));
+  if(!isNaN(savedEp)) startEp = savedEp;
+  if(startEp >= anime.episodes.length) startEp = anime.episodes.length - 1;
+  let currentEp = startEp;
+  let currentEpisodeObj = null;
+
+  function updateWatchedUI(){
+    document.querySelectorAll(".episode-btn").forEach((b,i)=>{
+      const watched = localStorage.getItem(watchedKey(i)) === "true";
+      b.classList.toggle("watched-ep", watched && i !== currentEp);
+    });
+  }
+
+  function highlight(){ 
+    document.querySelectorAll(".episode-btn").forEach((b,i)=>b.classList.toggle("active-ep", i===currentEp));
+    updateWatchedUI();
+  }
+
+  /* progress / reward state variables */
+  const MAX_SINGLE_SEEK = 240; // 4 minutes
+  const MAX_TOTAL_SEEK = 240;
+  let forwardSkipTotal = 0;
+  let disqualified = false;
+  let rewarded = false;
+  let episodeDuration = 0;
+  let thresholdSecs = 0;
+
+  /* --- Robust reload/resume helpers --- */
+  let reloadAttempts = 0;
+  let reloading = false;
+  let lastKnownTimeBeforeReload = 0;
+  let resumeWatchdog = null;
+
+  // Make URL safe with cache-busting
+  function cacheBustUrl(url){
+    try{
+      const u = new URL(url, location.href);
+      u.searchParams.set('_cb', String(Date.now()));
+      return u.toString();
+    }catch(e){
+      // fallback: append param manually
+      return url + (url.includes('?') ? '&' : '?') + '_cb=' + Date.now();
+    }
+  }
+
+  function tryReloadSource(immediate){
+    if(!currentEpisodeObj) return;
+    if(reloading) return;
+    reloading = true;
+    reloadAttempts++;
+    lastKnownTimeBeforeReload = Math.max(0, video.currentTime || parseFloat(localStorage.getItem(timeKey(currentEp))||"0") || 0);
+
+    loadingEl.classList.add('active');
+    showToast('Đang cố gắng phục hồi phát...');
+
+    const newSrc = cacheBustUrl(currentEpisodeObj.video);
+
+    // detach existing loadedmetadata handler temporary and restore after
+    function onLoadedMetaOnce(){
+      try{
+        // set time to lastKnownTimeBeforeReload (bounded under duration)
+        const safeTime = Math.min(lastKnownTimeBeforeReload, Math.max(0, (video.duration || 0) - 0.5));
+        if(!isNaN(safeTime) && safeTime > 0){
+          try{ video.currentTime = safeTime; }catch(e){}
+        }
+      }catch(e){}
+    }
+
+    // Try to set source and play, with backoff if fails
+    source.src = newSrc;
+    video.load();
+
+    // ensure we apply last time after metadata available
+    video.addEventListener('loadedmetadata', onLoadedMetaOnce, { once: true });
+
+    // play attempt
+    const attemptPlay = ()=>{
+      video.play().then(()=>{
+        // success
+        reloading = false;
+        reloadAttempts = 0;
+        loadingEl.classList.remove('active');
+        showToast('Đã kết nối lại', 1200);
+      }).catch((err)=>{
+        // failed — schedule retry with backoff (but not infinite)
+        const maxRetries = 6;
+        if(reloadAttempts < maxRetries){
+          const delay = Math.min(2000 * Math.pow(2, reloadAttempts), 20000); // exponential
+          setTimeout(()=> attemptPlay(), delay);
+        } else {
+          reloading = false;
+          loadingEl.classList.remove('active');
+          showToast('Không thể load video. Kiểm tra mạng hoặc thử lại sau.', 2500);
+        }
+      });
+    };
+
+    // small delay to let loadedmetadata run
+    setTimeout(()=> attemptPlay(), 220);
+  }
+
+  function tryResumePlayback(){
+    // try simple resume if paused due to buffering
+    if(video.paused && !video.ended && !video.seeking){
+      video.play().then(()=> {
+        // ok
+      }).catch(()=> {
+        // ignore; fallback to reload
+        tryReloadSource(true);
+      });
+    }
+  }
+
+  // Watchdog: if readyState is low for a while and video not paused, attempt reload
+  function startResumeWatchdog(){
+    stopResumeWatchdog();
+    resumeWatchdog = setInterval(()=>{
+      try{
+        // readyState < 3 indicates not enough data to play through
+        if(video.readyState < 3 && !video.paused && !video.seeking && !reloading){
+          // attempt to resume first
+          tryResumePlayback();
+          // if still stuck after a short wait, attempt source reload
+          setTimeout(()=>{
+            if(video.readyState < 3 && !video.paused && !video.seeking && !reloading){
+              tryReloadSource(false);
+            }
+          }, 1800);
+        }
+      }catch(e){}
+    }, 2200);
+  }
+  function stopResumeWatchdog(){ if(resumeWatchdog) clearInterval(resumeWatchdog); resumeWatchdog = null; }
+
+  /* --- end reload helpers --- */
+
+  function resetForReplay(){
+    setHighestSeen(0);
+    localStorage.removeItem(rewardedKey(currentEp));
+    localStorage.removeItem(rewardedKey(currentEp)+"_disq");
+    localStorage.setItem(skipKey(currentEp),"0");
+    forwardSkipTotal = 0; disqualified=false; rewarded=false;
+    showToast("Đã reset — có thể nhận lại xu",1200);
+    updateWatchStatusUI();
+  }
+
+  function loadEpisode(index, resetTime){
+    currentEp = Math.max(0, Math.min(index, anime.episodes.length-1));
+    highlight();
+    const ep = anime.episodes[currentEp];
+    currentEpisodeObj = ep;
+
+    // mark watched immediately when user clicked to open
+    try{ localStorage.setItem(watchedKey(currentEp), "true"); }catch(e){}
+
+    // parse duration from data.json if present
+    episodeDuration = parseDurationToSeconds(ep.duration) || 0;
+    if(episodeDuration>0){
+      if(episodeDuration >= 3600) thresholdSecs = Math.max(0, episodeDuration - 300);
+      else if(episodeDuration <= 30*60) thresholdSecs = Math.max(0, episodeDuration - 180);
+      else thresholdSecs = Math.max(0, episodeDuration - 240);
+    } else thresholdSecs=0;
+
+    // use cache-busted src to avoid stale connections, but keep base for future retries
+    source.src = ep.video;
+    loadingEl.classList.add("active");
+    video.load();
+    localStorage.setItem(KEY_EP, currentEp);
+
+    forwardSkipTotal = parseFloat(localStorage.getItem(skipKey(currentEp))||"0");
+    rewarded = localStorage.getItem(rewardedKey(currentEp))==="true";
+    disqualified = localStorage.getItem(rewardedKey(currentEp)+"_disq")==="true";
+
+    watchStatusEl.style.display="block";
+    updateWatchStatusUI();
+
+    if(resetTime) localStorage.setItem(timeKey(currentEp),"0");
+    // try to restore previous time if exists
+    const savedT = parseFloat(localStorage.getItem(timeKey(currentEp))||"0");
+    video.addEventListener('loadedmetadata', function restoreTimeOnce(){
+      try{
+        if(savedT > 1 && savedT < (video.duration - 1)){
+          video.currentTime = savedT;
+        }
+      }catch(e){}
+    }, { once:true });
+
+    // attempt to play
+    video.play().catch(()=>{ /* will be handled by events and watchdog */ });
+    setTimeout(()=>{ const btns = document.querySelectorAll(".episode-btn"); if(btns[currentEp] && btns[currentEp].scrollIntoView) btns[currentEp].scrollIntoView({behavior:'smooth', inline:'center'}); }, 200);
+
+    // reset reload counters for fresh episode
+    reloadAttempts = 0;
+    reloading = false;
+  }
+
+  function getHighestSeen(){ return parseInt(localStorage.getItem(highestKey(currentEp))||"0",10); }
+  function setHighestSeen(v){ localStorage.setItem(highestKey(currentEp), String(Math.max(0, Math.floor(v)))); }
+
+  function getWatchDisplay(){ return fmtTime(getHighestSeen()); }
+  function updateWatchStatusUI(){
+    const needed = thresholdSecs || Math.floor((video.duration||episodeDuration) - 180);
+    const stat = rewarded ? "Đã nhận" : (disqualified ? "Bị loại" : "Đang chờ");
+    const accepted = hasAcceptedRules() ? " (Đã đồng ý quy tắc)" : " (Chưa đồng ý quy tắc)";
+    watchStatusEl.innerText = `Đã xem: ${getWatchDisplay()} / Cần: ${fmtTime(thresholdSecs || needed)} — Trạng thái: ${stat}${accepted}`;
+  }
+
+  video.__prevTimeForSeek = 0;
+  video.addEventListener("loadedmetadata", ()=>{
+    timeline.max = video.duration || 0;
+    totalTimeEl.innerText = fmtTime(video.duration);
+    if(!episodeDuration && isFinite(video.duration) && video.duration>0){
+      episodeDuration = Math.floor(video.duration);
+      if(episodeDuration >= 3600) thresholdSecs = Math.max(0, episodeDuration - 300);
+      else if(episodeDuration <= 30*60) thresholdSecs = Math.max(0, episodeDuration - 180);
+      else thresholdSecs = Math.max(0, episodeDuration - 240);
+    }
+    const t = parseFloat(localStorage.getItem(timeKey(currentEp))||"0");
+    if(t>1 && t < (video.duration - 1)) video.currentTime = t;
+    updateWatchStatusUI();
+  });
+
+  setInterval(()=>{ if(!video.paused && !isNaN(video.currentTime)) localStorage.setItem(timeKey(currentEp), video.currentTime); }, 500);
+
+  video.addEventListener("timeupdate", ()=>{
+    timeline.value = video.currentTime;
+    currentTimeEl.innerText = fmtTime(video.currentTime);
+
+    const prev = video.__prevTimeForSeek || 0;
+    const nowt = video.currentTime || 0;
+    if(prev > 1 && nowt <= 0.5) resetForReplay();
+    video.__prevTimeForSeek = nowt;
+
+    const curFloor = Math.floor(nowt);
+    const highest = getHighestSeen();
+    if(curFloor > highest){
+      setHighestSeen(curFloor);
+      updateWatchStatusUI();
+      checkRewardCondition();
+    }
+  });
+
+  timeline.addEventListener("input", ()=>{
+    const attempted = parseFloat(timeline.value || 0);
+    const current = video.currentTime || 0;
+    const delta = attempted - current;
+    if(delta > MAX_SINGLE_SEEK){
+      const allowed = current + MAX_SINGLE_SEEK;
+      timeline.value = allowed;
+      video.currentTime = allowed;
+      addForwardSkip(MAX_SINGLE_SEEK);
+      showToast("Tua quá 4 phút bị giới hạn",1200);
+    } else if(delta > 0){
+      video.currentTime = attempted;
+      addForwardSkip(delta);
+    } else {
+      video.currentTime = attempted;
+    }
+  });
+
+  video.addEventListener('seeking', ()=>{ loadingEl.classList.add("active"); });
+  video.addEventListener('seeked', ()=>{
+    loadingEl.classList.remove("active");
+    const prev = video.__prevTimeForSeek || 0;
+    const nowt = video.currentTime || 0;
+    const delta = nowt - prev;
+    if(delta > 0){
+      if(delta > MAX_SINGLE_SEEK){
+        const clampTo = prev + MAX_SINGLE_SEEK;
+        video.currentTime = clampTo;
+        addForwardSkip(MAX_SINGLE_SEEK);
+        showToast("Tua quá 4 phút bị giới hạn",1200);
+      } else addForwardSkip(delta);
+    }
+    video.__prevTimeForSeek = nowt;
+  });
+
+  function addForwardSkip(sec){
+    forwardSkipTotal += Number(sec || 0);
+    localStorage.setItem(skipKey(currentEp), String(forwardSkipTotal));
+    if(sec > MAX_SINGLE_SEEK || forwardSkipTotal > MAX_TOTAL_SEEK){
+      disqualified = true;
+      localStorage.setItem(rewardedKey(currentEp)+"_disq", "true");
+    }
+    updateWatchStatusUI();
+  }
+
+  playBtn.onclick = ()=> video.paused ? video.play() : video.pause();
+  video.addEventListener('playing', ()=>{ loadingEl.classList.remove("active"); playBtn.textContent = "⏸️"; });
+  video.addEventListener('pause', ()=>{ playBtn.textContent = "▶️"; });
+
+  function checkRewardCondition(){
+    if(rewarded || disqualified) return;
+    if(!hasAcceptedRules()){
+      showToast("Để nhận xu, tick 'Tôi đã đọc và đồng ý quy tắc'.",2500);
+      return;
+    }
+    const highest = getHighestSeen();
+    const need = thresholdSecs || Math.floor((video.duration || episodeDuration) - 180);
+    if(highest < (thresholdSecs || need)) return;
+    const durSeconds = (episodeDuration && episodeDuration>0) ? episodeDuration : Math.floor(video.duration || 0);
+    const isMovie = durSeconds >= 3600;
+    const userIsVip = isVipActive();
+    const EP_NORMAL = 30;
+    const EP_VIP    = 50;
+    const MOV_NORMAL= 50;
+    const MOV_VIP   = 100;
+    let amount = 0;
+    if(isMovie) amount = userIsVip ? MOV_VIP : MOV_NORMAL;
+    else amount = userIsVip ? EP_VIP : EP_NORMAL;
+    rewarded = true;
+    localStorage.setItem(rewardedKey(currentEp),"true");
+
+    // *** IMPORTANT: update coin storage and UI IMMEDIATELY on player page ***
+    const cur = parseInt(localStorage.getItem(COIN_KEY) || "0", 10);
+    const newVal = cur + amount;
+    localStorage.setItem(COIN_KEY, String(newVal));
+    // inform other tabs (they'll react to this key)
+    localStorage.setItem('coin_update_ts', String(Date.now()));
+
+    // update current page UI instantly
+    updateCoinUI();
+    pulseCoin(amount);
+
+    showToast(`+${amount} xu (đã nhận)`,1500);
+    updateWatchStatusUI();
+  }
+
+  volumeRange.oninput = ()=>{ video.volume = volumeRange.value; volBtn.textContent = video.volume===0?"🔇":"🔊"; };
+  volBtn.onclick = ()=>{ video.muted = !video.muted; volBtn.textContent = video.muted?"🔇":"🔊"; };
+  fullBtn.onclick = ()=>{ const el = document.querySelector(".video-wrapper"); document.fullscreenElement ? document.exitFullscreen() : el.requestFullscreen(); };
+
+  video.addEventListener("ended", ()=>{
+    const dur = Math.floor(video.duration || episodeDuration || 0);
+    const highest = getHighestSeen();
+    if(dur > highest) setHighestSeen(dur);
+    checkRewardCondition();
+    if(currentEp+1 < anime.episodes.length) loadEpisode(currentEp+1,false);
+  });
+
+  // when waiting/stalled -> try resume, then reload if needed
+  video.addEventListener('waiting', ()=>{
+    loadingEl.classList.add('active');
+    // try quick resume first
+    setTimeout(()=> {
+      tryResumePlayback();
+      // if still stuck for a while, watchdog will call tryReloadSource
+    }, 800);
+  });
+  video.addEventListener('stalled', ()=>{
+    loadingEl.classList.add('active');
+    setTimeout(()=> {
+      tryResumePlayback();
+    }, 1000);
+  });
+  video.addEventListener('suspend', ()=>{
+    // browser paused fetching; attempt resume after short wait
+    setTimeout(()=> { tryResumePlayback(); }, 800);
+  });
+
+  // error => try reload
+  video.addEventListener('error', (ev)=>{
+    console.warn("Video error event:", ev);
+    loadingEl.classList.add('active');
+    tryReloadSource(false);
+  });
+
+  leftTap.ondblclick = ()=>{ video.currentTime = Math.max(0, video.currentTime - 10); showToast("-10s",800); };
+  rightTap.ondblclick = ()=>{ const attempt = video.currentTime + 10; video.currentTime = Math.min(video.duration||Infinity, attempt); addForwardSkip(10); showToast("+10s",800); };
+
+  function showControls(){ controls.classList.remove("hide-controls"); clearTimeout(hideTimer); hideTimer = setTimeout(()=>controls.classList.add("hide-controls"),2000); }
+  let hideTimer;
+  document.onmousemove = document.ontouchstart = showControls;
+  document.onkeydown = e=>{ if(e.code==="Space"){ e.preventDefault(); video.paused?video.play():video.pause(); } if(e.code==="KeyF") fullBtn.click(); if(e.code==="ArrowRight") loadEpisode(currentEp+1,false); if(e.code==="ArrowLeft") loadEpisode(currentEp-1,false); };
+
+  ["waiting","stalled"].forEach(ev => video.addEventListener(ev, ()=> loadingEl.classList.add("active")));
+  ["playing","canplay","canplaythrough","loadeddata"].forEach(ev => video.addEventListener(ev, ()=> { loadingEl.classList.remove("active"); }));
+  // keep play watchdog running
+  startResumeWatchdog();
+
+  /* VIP UI + expiry watcher */
+  function refreshVipUI(){
+    if(!anime.vip){ vipBoxEl.style.display = "none"; return; }
+    if(isVipActive()){ vipBoxEl.style.display = "flex"; vipRemainEl.innerText = formatRemainMs(vipRemainingMs()); }
+    else { vipBoxEl.style.display = "none"; }
+  }
+
+  let vipWatcher = null;
+  function startVipWatcher(){
+    if(vipWatcher) clearInterval(vipWatcher);
+    if(!anime.vip) return;
+    vipWatcher = setInterval(()=>{
+      const vobj = getVipObj();
+      if(!vobj || Date.now() >= (vobj.expire || 0)) {
+        try{ localStorage.removeItem(VIP_KEY); }catch(e){}
+        localStorage.setItem('vip_update_ts', String(Date.now()));
+        showToast("VIP đã hết hạn. Trở về Trang Chủ...", 1200);
+        setTimeout(()=>{ try { location.href = '/index.html'; } catch(e){} }, 400);
+        clearInterval(vipWatcher);
+      } else {
+        vipRemainEl.innerText = formatRemainMs((vobj.expire||0) - Date.now());
+      }
+    }, 1000);
+  }
+
+  /* network online/offline handling */
+  window.addEventListener('online', ()=> {
+    showToast('Mạng đã trở lại, cố gắng kết nối lại...', 1400);
+    // try to reload current source and resume
+    setTimeout(()=> tryReloadSource(true), 600);
+  });
+  window.addEventListener('offline', ()=> {
+    showToast('Mất kết nối mạng', 1800);
+  });
+
+  window.addEventListener('storage', (ev)=>{
+    if(ev.key === VIP_KEY || ev.key === 'vip_update_ts'){
+      refreshVipUI();
+      if(isVipActive()) startVipWatcher();
+    }
+    if(ev.key === RULES_KEY){
+      acceptCheckbox.checked = hasAcceptedRules();
+      updateWatchStatusUI();
+    }
+    // if another tab updated coins, update this page UI
+    if(ev.key === 'coin_update_ts' || ev.key === COIN_KEY) updateCoinUI();
+    if(ev.key === PURCHASED_CODES_KEY || ev.key === 'purchased_update_ts' || ev.key === USED_CODES_KEY) refreshPurchasedListUI();
+
+    // handle migration signal -> update UI
+    if(ev.key === 'progress_migration_ts') updateWatchedUI();
+  });
+
+  refreshVipUI();
+  if(anime.vip) startVipWatcher();
+
+  loadEpisode(startEp,false);
+  initLikeSystem(anime);
+  initShareSystem(anime);
+  setInterval(updateWatchStatusUI, 1000);
+}
+
+/* ---------- Like / Share ---------- */
+function initLikeSystem(anime){
+  const btn = document.getElementById("likeBtn");
+  const k1 = `${anime.id}_liked`;
+  const k2 = `${anime.id}_like_count`;
+  let liked = localStorage.getItem(k1) === "true";
+  let count = parseInt(localStorage.getItem(k2)||"0",10);
+  btn.innerText = `👍 Thích ${count}`;
+  btn.onclick = ()=>{ if(liked) return; liked=true; count++; localStorage.setItem(k1,"true"); localStorage.setItem(k2,String(count)); btn.innerText = `👍 Thích ${count}`; };
+}
+function initShareSystem(anime){
+  document.getElementById("shareBtn").onclick = ()=>{
+    const url = location.href;
+    navigator.share ? navigator.share({title:anime.title,url}) : prompt("Sao chép link:",url);
+  };
+}
+
+/* ---------- BUY/ENTER Modal logic (object-aware & stacking) ---------- */
+function openBuyModal(){ document.getElementById("buyModal").style.display = "flex"; document.getElementById("buyResult").style.display = "none"; }
+function closeBuyModal(){ document.getElementById("buyModal").style.display = "none"; }
+function openEnterModal(){ refreshPurchasedListUI(); document.getElementById("enterResult").style.display="none"; document.getElementById("codeInput").value=""; document.getElementById("enterModal").style.display="flex"; }
+function closeEnterModal(){ document.getElementById("enterModal").style.display = "none"; }
+
+document.getElementById("confirmBuy").addEventListener("click", handleBuy);
+document.getElementById("cancelBuy").addEventListener("click", closeBuyModal);
+document.getElementById("confirmEnter").addEventListener("click", handleEnter);
+document.getElementById("cancelEnter").addEventListener("click", closeEnterModal);
+document.getElementById("vipReqBuy").addEventListener("click", ()=>{ closeVipRequiredModal(); openBuyModal(); });
+document.getElementById("vipReqEnter").addEventListener("click", ()=>{ closeVipRequiredModal(); openEnterModal(); });
+document.getElementById("vipReqClose").addEventListener("click", closeVipRequiredModal);
+
+function handleBuy(){
+  if(getCoin() < VIP_COST){ alert("Không đủ xu."); return; }
+  const used = getUsedCodes();
+  const purchased = getPurchasedCodes().map(x=>x.code);
+  let picked = null;
+  for(let i=0;i<12;i++){
+    const cand = generateVipCode();
+    if(!used.includes(cand) && !purchased.includes(cand)){ picked = cand; break; }
+  }
+  if(!picked) picked = generateVipCode();
+  // default 60 minutes
+  addPurchasedCode(picked, 60);
+  setCoin( getCoin() - VIP_COST );
+  document.getElementById("boughtCode").innerText = picked + " (60m)";
+  document.getElementById("buyResult").style.display = "block";
+  document.getElementById("copyBought").onclick = ()=>{
+    navigator.clipboard?.writeText(picked).then(()=> alert("Đã sao chép mã."), ()=>{ prompt("Sao chép mã:", picked); });
+  };
+  document.getElementById("gotoEnter").onclick = ()=>{
+    closeBuyModal();
+    openEnterModal();
+  };
+  refreshPurchasedListUI();
+  localStorage.setItem('coin_update_ts', String(Date.now()));
+}
+
+/* handleEnter stacks VIP duration and removes purchased code object */
+function handleEnter(){
+  const raw = (document.getElementById("codeInput").value||"").trim();
+  const code = raw.toUpperCase();
+  if(!code){ document.getElementById("enterResult").style.display="block"; document.getElementById("enterResult").innerText="Nhập mã trước khi xác nhận."; return; }
+
+  const used = getUsedCodes();
+  if(used.includes(code)){ document.getElementById("enterResult").style.display="block"; document.getElementById("enterResult").innerText="Mã đã được sử dụng."; return; }
+
+  const purchased = getPurchasedCodes();
+  const found = purchased.find(x=>x.code === code);
+  if(!found){
+    document.getElementById("enterResult").style.display="block";
+    document.getElementById("enterResult").innerText="Mã không hợp lệ (bạn chưa mua mã này).";
+    return;
+  }
+
+  // mark used
+  markCodeUsed(code);
+
+  // stacking: if existing vip active, extend from existing expiry; else from now
+  const minutesToAdd = Number(found.durationMinutes) || 60;
+  const now = Date.now();
+  const existing = getVipObj();
+  let base = now;
+  if(existing && existing.expire && Number(existing.expire) > now) base = Number(existing.expire);
+  const newExpire = base + minutesToAdd * 60 * 1000;
+  localStorage.setItem(VIP_KEY, JSON.stringify({ code, expire: newExpire }));
+  localStorage.setItem('vip_update_ts', String(Date.now()));
+
+  // remove purchased code (object-aware)
+  removePurchasedCode(code);
+
+  document.getElementById("enterResult").style.display="block";
+  document.getElementById("enterResult").innerText = `Kích hoạt thành công: ${code} — +${minutesToAdd} phút VIP.`;
+  refreshPurchasedListUI();
+  updateCoinUI();
+  setTimeout(()=> closeEnterModal(), 1100);
+}
+
+/* VIP required modal for search result */
+let _vipPendingItem = null;
+function showVipRequiredModalFor(item){
+  _vipPendingItem = item;
+  document.getElementById("vipReqText").innerText = `Bộ phim "${item.title}" cần VIP để xem. Bạn có thể mua mã ngẫu nhiên hoặc nhập mã đã mua.`;
+  document.getElementById("vipRequiredModal").style.display = "flex";
+}
+function closeVipRequiredModal(){ document.getElementById("vipRequiredModal").style.display = "none"; _vipPendingItem = null; }
+
+/* purchased list UI */
+function refreshPurchasedListUI(){
+  const p = getPurchasedCodes();
+  const el = document.getElementById("purchasedList");
+  el.innerText = p.length ? p.map(x=>`${x.code} (${x.durationMinutes}m)`).join(", ") : "—";
+}
+
+/* ---------- Init wiring ---------- */
+(function init(){
+  document.getElementById("modalCost").innerText = VIP_COST;
+  updateCoinUI();
+  refreshPurchasedListUI();
+
+  // coin chip open index
+  const coinChip = document.getElementById('coinChip');
+  if(coinChip) coinChip.addEventListener('click', ()=> {
+    if(confirm("Mở Trang Chủ để quản lý mã/VIP?")) { try{ location.href = 'index.html'; }catch(e){} }
+  });
+
+  // storage sync
+  window.addEventListener('storage', (ev)=>{
+    if(ev.key === 'coin_update_ts') updateCoinUI();
+    if(ev.key === PURCHASED_CODES_KEY || ev.key === 'purchased_update_ts' || ev.key === USED_CODES_KEY) refreshPurchasedListUI();
+    if(ev.key === VIP_KEY || ev.key === 'vip_update_ts'){
+      // if VIP activated elsewhere, close modals here
+      if(isVipActive()){ closeBuyModal(); closeEnterModal(); closeVipRequiredModal(); }
+    }
+    if(ev.key === RULES_KEY){
+      const cb = document.getElementById('acceptRules');
+      if(cb) cb.checked = hasAcceptedRules();
+    }
+  });
+})();
+</script>
+</body>
+</html>

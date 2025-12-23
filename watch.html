@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Watch Anime</title>
+<style>
+/* (CSS giữ nguyên y hệt như trước) */
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+    font-family:Poppins,sans-serif;
+    background:#111;
+    color:#ddd;
+    padding-bottom:60px
+}
+header{
+    background:#000;
+    padding:15px;
+    font-size:20px;
+    color:#fff;
+    text-align:center;
+    border-bottom:2px solid #22ff55;
+    position:relative;
+}
+.container{
+    width:95%;
+    max-width:900px;
+    margin:20px auto
+}
+.title{
+    font-size:28px;
+    color:#aaff55;
+    font-weight:bold
+}
+.subtitle{
+    font-size:16px;
+    opacity:.8;
+    margin-bottom:10px
+}
+.poster-box{
+    text-align:center;
+    margin:20px 0;
+    position:relative
+}
+.poster-box img{
+    width:80%;
+    border-radius:15px;
+    box-shadow:0 0 20px rgba(0,255,100,.3)
+}
+.follow-btn{
+    position:absolute;
+    top:15px;
+    left:15px;
+    background:#444;
+    padding:8px 15px;
+    border-radius:8px;
+    font-size:14px;
+    cursor:pointer;
+    color:#fff;
+    transition:background .18s, transform .08s;
+    user-select:none;
+}
+.follow-btn.following{
+    background:#1fb21f;
+    color:#052605;
+    font-weight:700;
+}
+.follow-btn:active{ transform:scale(.98); }
+
+/* favorite heart button (new) */
+.fav-btn{
+    position:absolute;
+    top:15px;
+    right:15px;
+    background:rgba(255,255,255,0.06);
+    padding:8px 10px;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+    color:#fff;
+    transition:background .18s, transform .08s;
+    user-select:none;
+}
+.fav-btn.liked{
+    background:#ff4b6e;
+    color:#fff;
+    box-shadow:0 6px 18px rgba(255,75,110,.18);
+}
+.fav-btn .heart{ font-size:18px; margin-right:6px; }
+
+.watch-btn{
+    margin-top:-40px;
+    background:#ff4444;
+    padding:15px 25px;
+    color:#fff;
+    font-size:20px;
+    border-radius:10px;
+    display:inline-block;
+    font-weight:bold;
+    cursor:pointer;
+    text-decoration:none;
+}
+.description{
+    margin-top:25px;
+    font-size:15px;
+    line-height:1.7
+}
+.info-section{
+    margin-top:30px;
+    background:#1a1a1a;
+    padding:20px;
+    border-radius:15px;
+    border:1px solid #2f2f2f
+}
+.info-title{
+    color:#aaff55;
+    font-size:20px;
+    margin-bottom:12px;
+    font-weight:bold
+}
+.info-list div{
+    margin-bottom:10px;
+    font-size:15px
+}
+.label{
+    color:#aaff55;
+    font-weight:bold
+}
+
+/* PHẦN PHIM */
+.parts-list{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap
+}
+.part-btn{
+    padding:10px 18px;
+    background:#222;
+    border-radius:10px;
+    border:1px solid #333;
+    cursor:pointer;
+    font-size:14px
+}
+.part-btn:hover{
+    background:#333
+}
+
+/* SEARCH area */
+.search-wrap { margin:16px auto 6px; max-width:900px; width:95%; display:flex; gap:12px; align-items:center; justify-content:space-between; }
+.search-bar {
+  display:flex;
+  gap:8px;
+  align-items:center;
+  background:#0f1113;
+  border:1px solid rgba(255,255,255,0.04);
+  padding:10px;
+  border-radius:12px;
+  flex:1;
+}
+.search-bar input {
+  flex:1;
+  background:transparent;
+  border:none;
+  outline:none;
+  color:#fff;
+  font-size:15px;
+  padding:6px 6px;
+}
+.search-bar .clear-btn {
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.04);
+  padding:6px 8px;
+  border-radius:8px;
+  color:#fff;
+  cursor:pointer;
+}
+
+/* coin chip */
+.coin-chip {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:linear-gradient(90deg,#ffd5a8,#ffe7c9);
+  color:#222;
+  padding:8px 10px;
+  border-radius:12px;
+  font-weight:700;
+  min-width:92px;
+  justify-content:center;
+}
+
+/* results */
+.search-results {
+  margin-top:10px;
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(170px, 1fr));
+  gap:12px;
+}
+.result-card {
+  background:#0b0c0d;
+  padding:8px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.03);
+  cursor:pointer;
+  transition:transform .12s, box-shadow .12s;
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+.result-card:hover { transform:translateY(-6px); box-shadow:0 10px 30px rgba(0,0,0,0.6); }
+.result-card img { width:56px; height:80px; object-fit:cover; border-radius:6px; flex-shrink:0; }
+.result-meta { color:#ddd; font-size:13px; }
+.result-meta .r-title { font-weight:700; color:#fff; margin-bottom:4px; }
+.result-meta .r-sub { color:#9aa; font-size:12px; }
+
+/* small empty state */
+.results-empty { color:#9aa; padding:12px; background:#0b0c0d; border-radius:10px; border:1px solid rgba(255,255,255,0.02); }
+
+/* modals (buy/enter/vip required) */
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:120}
+.modal{background:#fff;padding:18px;border-radius:10px;width:420px;max-width:96%}
+.modal h3{margin-bottom:8px;font-size:18px}
+.modal .row{margin-bottom:10px}
+.modal input[type=text]{width:100%;padding:8px;border:1px solid #ddd;border-radius:8px}
+.copy-btn{background:#2b6cb0;color:#fff;padding:6px 10px;border-radius:8px;border:none;cursor:pointer}
+
+/* progress bars */
+.progress-section { margin-top:18px; background:#0f1114; padding:14px; border-radius:12px; border:1px solid rgba(255,255,255,0.03); }
+.progress-title { color:#aaff55; font-weight:700; margin-bottom:10px; }
+.progress-item { margin-bottom:12px; }
+.progress-label { font-size:14px; margin-bottom:8px; color:#e6e6e6; display:flex; justify-content:space-between; gap:12px; }
+.bar-bg { background:rgba(255,255,255,0.06); height:12px; border-radius:8px; overflow:hidden; border:1px solid rgba(255,255,255,0.02); }
+.bar-fill { height:100%; width:0%; border-radius:8px 0 0 8px; transition: width .6s ease; }
+
+/* different color presets for each season */
+.fill-0 { background: linear-gradient(90deg,#4caf50,#8bc34a); }
+.fill-1 { background: linear-gradient(90deg,#ff9800,#ffc107); }
+.fill-2 { background: linear-gradient(90deg,#f44336,#ff6b6b); }
+.fill-3 { background: linear-gradient(90deg,#3f51b5,#5c6bc0); }
+.fill-4 { background: linear-gradient(90deg,#9c27b0,#ba68c8); }
+.fill-5 { background: linear-gradient(90deg,#00acc1,#26c6da); }
+/* fallback color */
+.fill-x { background: linear-gradient(90deg,#607d8b,#90a4ae); }
+
+/* responsive */
+@media (max-width:720px){
+  .poster-box img{ width:96%; }
+  .watch-btn{ margin-top:-16px; padding:12px 18px; font-size:18px; }
+  .result-card img { width:48px; height:68px; }
+  .search-wrap { flex-direction:column; align-items:stretch; gap:10px; }
+  .coin-chip { justify-content:flex-start; }
+}
+</style>
+</head>
+<body>
+
+<header>XEM ANIME</header>
+
+<!-- SEARCH (new) -->
+<div class="search-wrap">
+  <div class="search-bar" role="search" aria-label="Tìm anime nhanh">
+    <input id="globalSearchInput" placeholder="Tìm anime khác... (ví dụ: Your Name, Project Sekai)" autocomplete="off" />
+    <button id="clearSearch" class="clear-btn" title="Xóa">✕</button>
+  </div>
+
+  <!-- coin display (synced with index) -->
+  <div id="coinChip" class="coin-chip" title="Số xu hiện có">🪙 <span id="coinValue">0</span></div>
+</div>
+
+<div class="search-wrap" style="max-width:900px;">
+  <div id="searchResults" class="search-results" aria-live="polite" style="width:100%"></div>
+</div>
+
+<div class="container">
+
+    <div id="animeTitle" class="title"></div>
+    <div id="animeSubtitle" class="subtitle"></div>
+
+    <div class="poster-box">
+        <div id="followBtn" class="follow-btn">Theo dõi</div>
+        <!-- favorite button -->
+        <div id="favBtn" class="fav-btn" title="Yêu thích"><span class="heart">♡</span><span id="favLabel">Yêu thích</span></div>
+
+        <img id="animePoster" alt="Poster">
+        <a id="watchBtn" class="watch-btn" href="javascript:void(0)">XEM PHIM</a>
+    </div>
+
+    <div id="animeDescription" class="description"></div>
+
+    <!-- PROGRESS section (NEW): one progress bar per season/part -->
+    <div id="progressSection" class="progress-section" style="display:none">
+      <div class="progress-title">Tiến độ xem</div>
+      <div id="progressList"></div>
+    </div>
+
+    <!-- PHẦN PHIM -->
+    <div id="seasonSection" class="info-section" style="display:none">
+        <div class="info-title">Các phần</div>
+        <div id="seasonList" class="parts-list"></div>
+    </div>
+
+    <!-- THÔNG TIN -->
+    <div class="info-section">
+        <div class="info-title">Thông tin phim</div>
+        <div class="info-list">
+            <div><span class="label">Rating:</span> <span id="infoRating"></span></div>
+            <div><span class="label">Năm:</span> <span id="infoYear"></span></div>
+            <div><span class="label">Tình trạng:</span> <span id="infoStatus"></span></div>
+            <div><span class="label">Thể loại:</span> <span id="infoGenre"></span></div>
+            <div><span class="label">Studio:</span> <span id="infoStudio"></span></div>
+            <div><span class="label">Tập tiếp theo:</span> <span id="infoSchedule"></span></div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Buy Modal -->
+<div class="modal-backdrop" id="buyModal">
+  <div class="modal">
+    <h3>Mua code VIP</h3>
+    <div class="row" style="color:#444">Mỗi mã kích hoạt VIP có thể có thời lượng khác nhau. Mua sẽ trừ <strong id="modalCost">100</strong> xu.</div>
+
+    <div style="display:flex;gap:8px;margin-bottom:10px">
+      <button id="confirmBuy" class="copy-btn" style="background:#ff7aa3;color:#111;border:none;padding:8px 12px;border-radius:8px">Xác nhận mua (random)</button>
+      <button id="cancelBuy" class="copy-btn" style="background:#ddd;color:#111">Hủy</button>
+    </div>
+
+    <div id="buyResult" style="display:none">
+      <div class="row" style="color:#444">Mã bạn nhận được (đã chuyển vào "Mã đã mua"):</div>
+      <div style="display:flex;gap:8px;align-items:center;justify-content:space-between">
+        <div id="boughtCode" style="font-weight:700"></div>
+        <div style="display:flex;gap:8px">
+          <button id="copyBought" class="copy-btn">Sao chép</button>
+          <button id="gotoEnter" class="copy-btn" style="background:#fff;color:#111">Nhập mã</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Enter Modal -->
+<div class="modal-backdrop" id="enterModal">
+  <div class="modal">
+    <h3>Nhập mã VIP</h3>
+    <div class="row">
+      <input id="codeInput" placeholder="Nhập mã... (vd VIP-XXXX-YYYY)" />
+    </div>
+    <div style="display:flex;gap:8px">
+      <button id="confirmEnter" class="copy-btn" style="background:#6fd36f;color:#111">Xác nhận</button>
+      <button id="cancelEnter" class="copy-btn">Hủy</button>
+    </div>
+    <div id="enterResult" class="row" style="display:none;margin-top:8px;color:#444"></div>
+    <div class="row" style="margin-top:8px;color:#444">
+      <strong>Mã đã mua:</strong> <span id="purchasedList">—</span>
+    </div>
+  </div>
+</div>
+
+<!-- VIP required modal -->
+<div class="modal-backdrop" id="vipRequiredModal">
+  <div class="modal">
+    <h3>Phim này yêu cầu VIP</h3>
+    <div class="row" id="vipReqText" style="color:#444">Bạn cần kích hoạt VIP để xem bộ phim này.</div>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button id="vipReqBuy" class="copy-btn" style="background:#ff7aa3;color:#111">Mua mã</button>
+      <button id="vipReqEnter" class="copy-btn" style="background:#fff;color:#111">Nhập mã</button>
+      <button id="vipReqClose" class="copy-btn">Đóng</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ========== keys & config (compatible with index) ========== */
+const COIN_KEY = "user_coin_v1";
+const USED_CODES_KEY = "used_codes_v1";
+const PURCHASED_CODES_KEY = "purchased_codes_v1"; // stores array of objects OR array of strings
+const VIP_KEY = "vip_code_v1";
+const VIP_COST = 100;
+const MENU_FAV_KEY = "menu_favorites_v1";
+const MENU_HIST_KEY = "menu_history_v1";
+const MENU_FOLLOW_KEY = "menu_follow_v1";
+
+/* small helpers for coins */
+function getCoin(){ return parseInt(localStorage.getItem(COIN_KEY)||"0",10); }
+function setCoin(v){ localStorage.setItem(COIN_KEY,String(v)); updateCoinUI(); }
+function addCoin(x){ setCoin(getCoin()+x); }
+function updateCoinUI(){ const el=document.getElementById("coinValue"); if(el) el.innerText = getCoin(); }
+
+/* VIP helpers */
+function getVipObj(){ try{return JSON.parse(localStorage.getItem(VIP_KEY)||"null"); }catch(e){return null;} }
+function isVipActive(){ const v=getVipObj(); if(!v) return false; if(Date.now() > (v.expire||0)){ localStorage.removeItem(VIP_KEY); return false; } return true; }
+function vipRemainingMs(){ const v=getVipObj(); if(!v) return 0; return Math.max(0, (v.expire||0) - Date.now()); }
+function formatRemain(ms){ if(ms<=0) return "đã hết"; const m=Math.floor(ms/60000); const s=Math.floor((ms%60000)/1000); return `${m} phút ${s} giây`; }
+
+/* --- purchased-codes helpers (normalize both old string array and new object array) --- */
+function getPurchasedCodes(){
+  try{
+    const raw = JSON.parse(localStorage.getItem(PURCHASED_CODES_KEY) || "[]");
+    return raw.map(item => {
+      if(!item) return null;
+      if(typeof item === 'string') return { code: item, durationMinutes: 60 };
+      if(typeof item === 'object' && item.code) return { code: item.code, durationMinutes: item.durationMinutes || 60 };
+      return null;
+    }).filter(Boolean);
+  }catch(e){
+    return [];
+  }
+}
+function addPurchasedCode(code, durationMinutes = 60){
+  if(!code) return;
+  const arr = getPurchasedCodes();
+  if(!arr.find(x => x.code === code)){
+    arr.push({ code, durationMinutes: Number(durationMinutes) || 60 });
+    localStorage.setItem(PURCHASED_CODES_KEY, JSON.stringify(arr));
+    localStorage.setItem('purchased_update_ts', String(Date.now()));
+  }
+}
+function removePurchasedCode(code){
+  let arr = getPurchasedCodes();
+  arr = arr.filter(c => c.code !== code);
+  localStorage.setItem(PURCHASED_CODES_KEY, JSON.stringify(arr));
+  localStorage.setItem('purchased_update_ts', String(Date.now()));
+}
+
+/* used codes */
+function getUsedCodes(){ try{return JSON.parse(localStorage.getItem(USED_CODES_KEY)||"[]"); }catch(e){return [];} }
+function markCodeUsed(code){ const used=getUsedCodes(); if(!used.includes(code)) used.push(code); localStorage.setItem(USED_CODES_KEY, JSON.stringify(used)); }
+
+/* --- code generator --- */
+function randomSegment(len){
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const out = [];
+  const rnd = new Uint32Array(len);
+  window.crypto.getRandomValues(rnd);
+  for(let i=0;i<len;i++){
+    out.push(chars[rnd[i] % chars.length]);
+  }
+  return out.join('');
+}
+function generateVipCode(){ return `VIP-${randomSegment(4)}-${randomSegment(4)}`; }
+
+/* ---------- navigation with fallback (same as index) ---------- */
+function navigateWithFallback(paths, opts = { timeout: 600 }) {
+  if(!paths || !paths.length) return;
+  const startKey = `${location.pathname}${location.search}${location.hash}`;
+  let idx = 0;
+  const tryAssign = (p) => {
+    try { location.assign(p); } catch(e) { idx++; if(idx < paths.length) setTimeout(()=> tryAssign(paths[idx]), 60); }
+  };
+  tryAssign(paths[idx]);
+  const watcher = setInterval(()=>{
+    const nowKey = `${location.pathname}${location.search}${location.hash}`;
+    if(nowKey !== startKey) { clearInterval(watcher); return; }
+    idx++;
+    if(idx < paths.length) tryAssign(paths[idx]); else clearInterval(watcher);
+  }, opts.timeout);
+}
+
+/* buildCandidatesFor helper */
+function buildCandidatesFor(filename) {
+  const origin = (location && location.origin) ? location.origin.replace(/\/+$/,'') : '';
+  const path = location && location.pathname ? location.pathname : '';
+  let currentDir = '/';
+  if (path.endsWith('/')) currentDir = path;
+  else {
+    const idx = path.lastIndexOf('/');
+    if (idx >= 0) currentDir = path.substring(0, idx + 1);
+    if (!currentDir) currentDir = '/';
+  }
+  const cleanFile = (f) => f.replace(/^\/+/, '');
+  const candidates = [];
+  candidates.push(currentDir + cleanFile(filename));
+  candidates.push('./' + cleanFile(filename));
+  candidates.push(cleanFile(filename));
+  candidates.push('/' + cleanFile(filename));
+  candidates.push('/anime/' + cleanFile(filename));
+  candidates.push('../' + cleanFile(filename));
+  if (origin) {
+    candidates.push(origin + '/' + cleanFile(filename));
+    const combined = (origin + '/' + currentDir + cleanFile(filename)).replace(/([^:]\/)\/+/g, '$1');
+    candidates.push(combined);
+  }
+  return Array.from(new Set(candidates)).filter(Boolean);
+}
+
+/* ---------- global DB for search and page state ---------- */
+let GLOBAL_DB = null;
+const params = new URLSearchParams(location.search);
+const animeID = params.get("id");
+
+/* fetch data.json once (used by page and search) */
+fetch("data.json")
+.then(r => {
+    if(!r.ok) throw new Error('Cannot load data.json');
+    return r.json();
+})
+.then(db => {
+    GLOBAL_DB = db || {};
+    const data = GLOBAL_DB[animeID];
+    if (!data) {
+        updateCoinUI();
+        return;
+    }
+    loadAnime(data);
+    // also render progress initially
+    renderProgressForAnime(data);
+})
+.catch(err => {
+    console.error(err);
+    updateCoinUI();
+});
+
+/* ---------- SEARCH behavior ---------- */
+const searchInput = document.getElementById('globalSearchInput');
+const clearSearch = document.getElementById('clearSearch');
+const resultsEl = document.getElementById('searchResults');
+let searchTimer = null;
+if (searchInput) searchInput.addEventListener('input', onSearchInput);
+if (clearSearch) clearSearch.addEventListener('click', ()=>{
+  searchInput.value = '';
+  renderSearchResults([]);
+  searchInput.focus();
+});
+function onSearchInput(){
+  const q = (searchInput.value||'').trim();
+  if(searchTimer) clearTimeout(searchTimer);
+  searchTimer = setTimeout(()=> doSearch(q), 160);
+}
+function doSearch(q){
+  resultsEl.innerHTML = '';
+  if(!q || !GLOBAL_DB){ renderSearchResults([]); return; }
+  const qq = q.toLowerCase();
+  const all = Object.keys(GLOBAL_DB).map(k => {
+    const obj = GLOBAL_DB[k];
+    return { id: k, title: obj.title || "", subtitle: obj.subtitle || "", poster: obj.poster || obj.img || "", vip: !!obj.vip, uploadISO: obj.uploadISO || "" };
+  });
+  const matched = all.filter(a=>{
+    return a.title.toLowerCase().includes(qq)
+        || (a.subtitle && a.subtitle.toLowerCase().includes(qq))
+        || (GLOBAL_DB[a.id].genre && GLOBAL_DB[a.id].genre.join(' ').toLowerCase().includes(qq));
+  }).slice(0,36);
+  renderSearchResults(matched);
+}
+function renderSearchResults(list){
+  resultsEl.innerHTML = '';
+  if(!list || list.length === 0){
+    if(searchInput.value && searchInput.value.trim() !== ''){
+      resultsEl.innerHTML = `<div class="results-empty">Không tìm thấy kết quả cho "<strong>${escapeHtml(searchInput.value)}</strong>"</div>`;
+    }
+    return;
+  }
+  list.forEach(item=>{
+    const card = document.createElement('div');
+    card.className = 'result-card';
+    card.innerHTML = `
+      <img src="${escapeHtml(item.poster||'')}" alt="${escapeHtml(item.title)}" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=&#39;http://www.w3.org/2000/svg&#39; width=&#39;120&#39; height=&#39;160&#39;><rect width=&#39;100%&#39; height=&#39;100%&#39; fill=&#39;%230b0c0d&#39;/><text x=50% y=50% fill=&#39;%239aa&#39; font-size=14 text-anchor=middle dominant-baseline=middle>no+thumb</text></svg>'">
+      <div class="result-meta">
+        <div class="r-title">${escapeHtml(item.title)}</div>
+        <div class="r-sub">${escapeHtml(item.uploadISO || '')} ${item.vip ? ' • 👑 VIP' : ''}</div>
+      </div>
+    `;
+    card.onclick = ()=> handleResultClick(item);
+    resultsEl.appendChild(card);
+  });
+}
+function escapeHtml(s){ return (s+'').replace(/[&<>"']/g, function(m){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]; }); }
+
+/* ---------- When clicking a search result ---------- */
+function handleResultClick(item){
+  if(item.vip && !isVipActive()){
+    showVipRequiredModalFor(item);
+    return;
+  }
+  const candidate = buildCandidatesFor('watch.html').map(p => {
+    return p + (p.includes('?') ? '&' : '?') + 'id=' + encodeURIComponent(item.id);
+  });
+  navigateWithFallback(candidate, { timeout: 500 });
+}
+
+/* ---------- VIP modals (buy/enter) ---------- */
+function openBuyModal(){ document.getElementById("buyModal").style.display = "flex"; document.getElementById("buyResult").style.display = "none"; }
+function closeBuyModal(){ document.getElementById("buyModal").style.display = "none"; }
+function openEnterModal(){ refreshPurchasedListUI(); document.getElementById("enterResult").style.display="none"; document.getElementById("codeInput").value=""; document.getElementById("enterModal").style.display="flex"; }
+function closeEnterModal(){ document.getElementById("enterModal").style.display = "none"; }
+
+document.getElementById("confirmBuy").addEventListener("click", handleBuy);
+document.getElementById("cancelBuy").addEventListener("click", closeBuyModal);
+document.getElementById("confirmEnter").addEventListener("click", handleEnter);
+document.getElementById("cancelEnter").addEventListener("click", closeEnterModal);
+document.getElementById("vipReqBuy").addEventListener("click", ()=>{ closeVipRequiredModal(); openBuyModal(); });
+document.getElementById("vipReqEnter").addEventListener("click", ()=>{ closeVipRequiredModal(); openEnterModal(); });
+document.getElementById("vipReqClose").addEventListener("click", closeVipRequiredModal);
+
+/* handleBuy: create code object (default duration 60m) */
+function handleBuy(){
+  if(getCoin() < VIP_COST){ alert("Không đủ xu."); return; }
+  const used = getUsedCodes();
+  const purchasedCodes = getPurchasedCodes().map(x=>x.code);
+  let picked = null;
+  for(let i=0;i<12;i++){
+    const cand = generateVipCode();
+    if(!used.includes(cand) && !purchasedCodes.includes(cand)){ picked = cand; break; }
+  }
+  if(!picked) picked = generateVipCode();
+  // default buy gives 60 minutes
+  addPurchasedCode(picked, 60);
+  setCoin( getCoin() - VIP_COST );
+  document.getElementById("boughtCode").innerText = picked + " (60m)";
+  document.getElementById("buyResult").style.display = "block";
+  document.getElementById("copyBought").onclick = ()=>{
+    navigator.clipboard?.writeText(picked).then(()=> alert("Đã sao chép mã."), ()=>{ prompt("Sao chép mã:", picked); });
+  };
+  document.getElementById("gotoEnter").onclick = ()=>{
+    closeBuyModal();
+    openEnterModal();
+  };
+  refreshPurchasedListUI();
+  localStorage.setItem('coin_update_ts', String(Date.now()));
+}
+
+/* ===== UPDATED: handleEnter with stacking (cộng dồn VIP) and object-compatibility ===== */
+function handleEnter(){
+  const raw = (document.getElementById("codeInput").value||"").trim();
+  const code = raw.toUpperCase();
+  if(!code){
+    document.getElementById("enterResult").style.display="block";
+    document.getElementById("enterResult").innerText="Nhập mã trước khi xác nhận.";
+    return;
+  }
+
+  const used = getUsedCodes();
+  if(used.includes(code)){
+    document.getElementById("enterResult").style.display="block";
+    document.getElementById("enterResult").innerText="Mã đã được sử dụng.";
+    return;
+  }
+
+  const purchased = getPurchasedCodes();
+  const found = purchased.find(x=>x.code === code);
+  if(!found){
+    document.getElementById("enterResult").style.display="block";
+    document.getElementById("enterResult").innerText="Mã không hợp lệ (bạn chưa mua mã này).";
+    return;
+  }
+
+  // mark used
+  markCodeUsed(code);
+
+  // stacking: nếu có VIP hiện tại vẫn còn hạn -> cộng thêm vào expiry hiện tại
+  const minutesToAdd = Number(found.durationMinutes) || 60;
+  const now = Date.now();
+  const existing = getVipObj();
+  let base = now;
+  if(existing && existing.expire && Number(existing.expire) > now){
+    base = Number(existing.expire);
+  }
+  const newExpire = base + minutesToAdd * 60 * 1000;
+
+  // save new VIP object
+  localStorage.setItem(VIP_KEY, JSON.stringify({ code, expire: newExpire }));
+  localStorage.setItem('vip_update_ts', String(Date.now()));
+
+  // remove purchased code
+  removePurchasedCode(code);
+
+  // UI feedback
+  const totalRemainMs = newExpire - now;
+  const addedText = `${minutesToAdd} phút`;
+  document.getElementById("enterResult").style.display="block";
+  document.getElementById("enterResult").innerText = `Kích hoạt thành công: ${code} — +${addedText} VIP. Thời gian còn lại: ${formatRemain(totalRemainMs)}.`;
+
+  refreshVIPUI();
+  refreshPurchasedListUI();
+  updateCoinUI();
+
+  setTimeout(()=> closeEnterModal(), 1100);
+}
+
+/* VIP required modal for a search item */
+let _vipPendingItem = null;
+function showVipRequiredModalFor(item){
+  _vipPendingItem = item;
+  document.getElementById("vipReqText").innerText = `Bộ phim "${item.title}" cần VIP để xem. Bạn có thể mua mã ngẫu nhiên hoặc nhập mã đã mua.`;
+  document.getElementById("vipRequiredModal").style.display = "flex";
+}
+function closeVipRequiredModal(){ document.getElementById("vipRequiredModal").style.display = "none"; _vipPendingItem = null; }
+
+/* purchased list UI */
+function refreshPurchasedListUI(){
+  const p = getPurchasedCodes();
+  document.getElementById("purchasedList").innerText = p.length ? p.map(x=>`${x.code} (${x.durationMinutes}m)`).join(", ") : "—";
+}
+
+/* ---------- page load handlers (current anime) ---------- */
+const followBtn = document.getElementById('followBtn');
+const favBtn = document.getElementById('favBtn');
+const favLabel = document.getElementById('favLabel');
+const favHeart = favBtn.querySelector('.heart');
+const watchAnchor = document.getElementById('watchBtn');
+
+function loadAnime(data){
+    document.getElementById('animeTitle').innerText = data.title;
+    document.getElementById('animeSubtitle').innerText = data.subtitle || "";
+    const poster = document.getElementById('animePoster');
+    poster.src = data.poster || "";
+    document.getElementById('animeDescription').innerText = data.description || "";
+
+    document.getElementById('infoRating').innerText = (data.rating != null) ? (data.rating + "%") : "—";
+    document.getElementById('infoYear').innerText = data.year || "—";
+    document.getElementById('infoStatus').innerText = data.status || "—";
+    document.getElementById('infoGenre').innerText = (data.genre || []).join(", ");
+    document.getElementById('infoStudio').innerText = data.studio || "—";
+    document.getElementById('infoSchedule').innerText = data.schedule?.hasSchedule ? (`Tập ${data.schedule.nextEpisode} — ${data.schedule.nextDate}`) : "Không có";
+
+    // seasons: show section if any seasons exist
+    if (data.seasons && data.seasons.length > 0) {
+        document.getElementById('seasonSection').style.display = 'block';
+        const container = document.getElementById('seasonList');
+        container.innerHTML = '';
+        data.seasons.forEach((s, idx) => {
+            const btn = document.createElement('div');
+            btn.className = 'part-btn';
+            const name = s.name || (`Phần ${s.season || (idx+1)}`);
+            btn.innerText = name;
+            btn.onclick = () => {
+                if (data.vip && !isVipActive()) {
+                    showVipRequiredModalFor({ id: animeID, title: data.title });
+                    return;
+                }
+                const q = `id=${encodeURIComponent(animeID)}&s=${encodeURIComponent(idx+1)}&ep=1`;
+                const candidate = buildCandidatesFor('player.html').map(p => p + (p.includes('?') ? '&' : '?') + q);
+                navigateWithFallback(candidate, { timeout: 500 });
+            };
+            container.appendChild(btn);
+        });
+    } else {
+        document.getElementById('seasonSection').style.display = 'none';
+    }
+
+    // set initial button states (favorite / follow)
+    refreshButtons();
+
+    // attach handlers
+    followBtn.onclick = (ev) => {
+        ev.preventDefault();
+        toggleFollow(animeID);
+        refreshButtons();
+    };
+
+    favBtn.onclick = (ev) => {
+        ev.preventDefault();
+        if(isFavorite(animeID)){
+            removeFavorite(animeID);
+        } else {
+            addFavorite(animeID);
+        }
+        refreshButtons();
+    };
+
+    // when clicking "XEM PHIM": if anime.vip -> require VIP same as search behavior
+    watchAnchor.onclick = (ev) => {
+        ev.preventDefault();
+        if(data.vip && !isVipActive()){
+          showVipRequiredModalFor({ id: animeID, title: data.title });
+          return;
+        }
+
+        // --- NEW: auto-mark single-episode movie/season as watched for progress
+        try {
+          // case A: data.seasons exists and has exactly one season with one episode
+          if(Array.isArray(data.seasons) && data.seasons.length === 1){
+            const s = data.seasons[0];
+            const eps = Array.isArray(s.episodes) ? s.episodes : [];
+            if(eps.length === 1){
+              const seasonId = s.name || `season1`;
+              const key = `${animeID}_${seasonId}_watched_0`;
+              localStorage.setItem(key, "true");
+              // update ui immediately in this tab
+              renderProgressForAnime(data);
+            }
+          } else {
+            // case B: no seasons (single-level) and episodes array exists with length 1
+            const eps = Array.isArray(data.episodes) ? data.episodes : [];
+            if(eps.length === 1){
+              const seasonId = data.name || `season1`;
+              const key = `${animeID}_${seasonId}_watched_0`;
+              localStorage.setItem(key, "true");
+              renderProgressForAnime(data);
+            }
+          }
+        } catch (e) {
+          // silent fail — do not block navigation
+          console.warn("Auto-mark watched failed:", e);
+        }
+
+        addHistoryItem({ id: animeID, title: data.title });
+        const q = `id=${encodeURIComponent(animeID)}&s=1&ep=1`;
+        const candidate = buildCandidatesFor('player.html').map(p => p + (p.includes('?') ? '&' : '?') + q);
+        navigateWithFallback(candidate, { timeout: 500 });
+    };
+}
+
+/* update visual states of buttons */
+function refreshButtons(){
+    if(!animeID) return;
+    if(isFollowing(animeID)){
+        followBtn.classList.add('following');
+        followBtn.innerText = 'Đã theo dõi';
+    } else {
+        followBtn.classList.remove('following');
+        followBtn.innerText = 'Theo dõi';
+    }
+
+    if(isFavorite(animeID)){
+        favBtn.classList.add('liked');
+        favHeart.innerText = '❤';
+        favLabel.innerText = 'Đã yêu thích';
+    } else {
+        favBtn.classList.remove('liked');
+        favHeart.innerText = '♡';
+        favLabel.innerText = 'Yêu thích';
+    }
+}
+
+/* ========== Menu storage helpers (same as index) ========== */
+function _readArr(key){ try{ return JSON.parse(localStorage.getItem(key) || "[]"); }catch(e){ return []; } }
+function _writeArr(key, arr){ localStorage.setItem(key, JSON.stringify(arr)); }
+function touchUpdate(tsKey){ try{ localStorage.setItem(tsKey, String(Date.now())); }catch(e){} }
+
+function addFavorite(id){ if(!id) return; const arr = _readArr(MENU_FAV_KEY); if(!arr.includes(id)){ arr.push(id); _writeArr(MENU_FAV_KEY, arr); touchUpdate('menu_fav_update_ts'); } }
+function removeFavorite(id){ if(!id) return; let arr = _readArr(MENU_FAV_KEY); arr = arr.filter(x=>x!==id); _writeArr(MENU_FAV_KEY, arr); touchUpdate('menu_fav_update_ts'); }
+function isFavorite(id){ const arr = _readArr(MENU_FAV_KEY); return arr.includes(id); }
+
+function addHistoryItem(item){ if(!item || !item.id) return; let arr = _readArr(MENU_HIST_KEY); arr = arr.filter(x => x.id !== item.id); arr.unshift({ id: item.id, title: item.title||"", ts: Date.now() }); if(arr.length > 200) arr = arr.slice(0,200); _writeArr(MENU_HIST_KEY, arr); touchUpdate('menu_hist_update_ts'); }
+
+function toggleFollow(id){ if(!id) return; let arr = _readArr(MENU_FOLLOW_KEY); if(arr.includes(id)){ arr = arr.filter(x=>x!==id); _writeArr(MENU_FOLLOW_KEY, arr); } else { arr.push(id); _writeArr(MENU_FOLLOW_KEY, arr); } touchUpdate('menu_follow_update_ts'); }
+function isFollowing(id){ const arr = _readArr(MENU_FOLLOW_KEY); return arr.includes(id); }
+
+/* ========== Progress rendering logic ========== */
+
+/*
+  Updated rules:
+  - Each season is its own 100% scale.
+  - seasonPercent = (watchedCount / seasonEpisodeCount) * 100.
+  - A watched episode is detected by, in order:
+      1) explicit key `${animeID}_${seasonId}_watched_${i}` === "true"
+      2) OR rewarded flag set by player: `${animeID}_${seasonId}_rewarded_${i}` === "true"
+      3) OR highest seconds recorded by player `${animeID}_${seasonId}_highest_${i}` >= 1
+    This lets single-episode movies be counted when player has rewarded/highest set.
+*/
+
+function renderProgressForAnime(data){
+  const progSection = document.getElementById('progressSection');
+  const progList = document.getElementById('progressList');
+  progList.innerHTML = '';
+
+  if(!data) { progSection.style.display = 'none'; return; }
+
+  // determine seasons/episodes structure
+  let seasons = [];
+  if(Array.isArray(data.seasons) && data.seasons.length>0){
+    seasons = data.seasons.map((s, idx) => {
+      const episodes = Array.isArray(s.episodes) ? s.episodes : [];
+      const seasonId = s.name || `season${idx+1}`;
+      return { source: s, seasonId, episodes, idx };
+    });
+  } else {
+    // fallback: single 'season' built from data.episodes (if present)
+    const eps = Array.isArray(data.episodes) ? data.episodes : [];
+    seasons = [{ source: data, seasonId: data.name || `season1`, episodes: eps, idx: 0 }];
+  }
+
+  // if no episodes, hide
+  const totalEpAcross = seasons.reduce((acc,s)=> acc + (s.episodes? s.episodes.length:0), 0);
+  if(totalEpAcross <= 0){
+    progSection.style.display = 'none';
+    return;
+  }
+
+  progSection.style.display = 'block';
+
+  const colorClasses = ['fill-0','fill-1','fill-2','fill-3','fill-4','fill-5'];
+
+  seasons.forEach((s) => {
+    const epCount = s.episodes ? s.episodes.length : 0;
+    let watchedCount = 0;
+
+    for(let i=0;i<epCount;i++){
+      const keyWatched = `${animeID}_${s.seasonId}_watched_${i}`;
+      let isWatched = false;
+      try{
+        if(localStorage.getItem(keyWatched) === "true"){
+          isWatched = true;
+        } else {
+          // fallback: check player keys used on player page
+          const rewardedKey = `${animeID}_${s.seasonId}_rewarded_${i}`;
+          const highestKey  = `${animeID}_${s.seasonId}_highest_${i}`;
+          if(localStorage.getItem(rewardedKey) === "true") {
+            isWatched = true;
+          } else {
+            const highestVal = parseInt(localStorage.getItem(highestKey) || "0", 10);
+            if(!isNaN(highestVal) && highestVal >= 1) isWatched = true;
+          }
+        }
+      }catch(e){
+        isWatched = false;
+      }
+      if(isWatched) watchedCount++;
+    }
+
+    // compute percent per-season (season is its own 100%)
+    const displayPercent = epCount > 0 ? Math.min(100, Math.round((watchedCount / epCount) * 10000) / 100) : 0;
+    const fillClass = colorClasses[s.idx % colorClasses.length] || 'fill-x';
+
+    const item = document.createElement('div');
+    item.className = 'progress-item';
+    item.innerHTML = `
+      <div class="progress-label">
+        <div><strong>${s.source.name || `Phần ${s.idx+1}`}</strong> — ${watchedCount}/${epCount} tập</div>
+        <div style="color:#aaff55;font-weight:700">${displayPercent}%</div>
+      </div>
+      <div class="bar-bg" aria-hidden="true">
+        <div class="bar-fill ${fillClass}" style="width:${displayPercent}%;"></div>
+      </div>
+    `;
+    progList.appendChild(item);
+  });
+}
+
+/* Re-render progress when storage changes (e.g., player marks episodes watched) */
+window.addEventListener('storage', (ev) => {
+  if(!GLOBAL_DB) return;
+  const data = GLOBAL_DB[animeID];
+  if(!data) return;
+  // refresh if a relevant key changed (watched / rewarded / highest / coin/vip)
+  if(ev.key && (
+      ev.key.startsWith(`${animeID}_`) ||
+      ev.key === 'coin_update_ts' || ev.key === COIN_KEY ||
+      ev.key === 'vip_update_ts' || ev.key === PURCHASED_CODES_KEY || ev.key === 'purchased_update_ts'
+    )){
+    setTimeout(()=> renderProgressForAnime(data), 120);
+  }
+});
+
+/* Also allow manual refresh when user clicks coin chip (keeps behavior) */
+document.getElementById('coinChip').addEventListener('click', ()=> {
+  if(confirm("Mở Trang Chủ để quản lý mã/VIP?")) {
+    const candidate = buildCandidatesFor('index.html');
+    navigateWithFallback(candidate, { timeout: 600 });
+  }
+});
+
+/* ========== Sync & init UI ========== */
+function initPage(){
+  document.getElementById("modalCost").innerText = VIP_COST;
+  document.getElementById("vipReqText").innerText = "Bộ phim này yêu cầu VIP để xem.";
+
+  updateCoinUI();
+  refreshPurchasedListUI();
+
+  window.addEventListener('storage', (ev)=>{
+    if(ev.key === COIN_KEY || ev.key === 'coin_update_ts') updateCoinUI();
+    if(ev.key === VIP_KEY || ev.key === 'vip_update_ts') {
+      if(isVipActive()){
+        closeBuyModal(); closeEnterModal(); closeVipRequiredModal();
+      }
+      refreshVIPUI();
+    }
+    if(ev.key === PURCHASED_CODES_KEY || ev.key === 'purchased_update_ts' || ev.key === USED_CODES_KEY) refreshPurchasedListUI();
+    if(ev.key === MENU_FAV_KEY || ev.key === 'menu_fav_update_ts') refreshButtons();
+    if(ev.key === MENU_FOLLOW_KEY || ev.key === 'menu_follow_update_ts') refreshButtons();
+
+    // also refresh progress on any relevant change
+    if(ev.key && ev.key.startsWith(`${animeID}_`)){
+      if(GLOBAL_DB && GLOBAL_DB[animeID]) renderProgressForAnime(GLOBAL_DB[animeID]);
+    }
+  });
+
+  // initial VIP UI update loop
+  setInterval(()=>{ refreshVIPUI(); }, 1000);
+}
+
+initPage();
+
+/* keep UI in sync */
+window.addEventListener('storage', (ev)=>{
+    if(!ev.key) return;
+    if(ev.key === MENU_FAV_KEY || ev.key === 'menu_fav_update_ts') refreshButtons();
+    if(ev.key === MENU_FOLLOW_KEY || ev.key === 'menu_follow_update_ts') refreshButtons();
+});
+
+updateCoinUI();
+refreshPurchasedListUI();
+
+/* refresh VIP header UI */
+function refreshVIPUI(){
+  // kept intentionally minimal (no header VIP shown here)
+}
+
+/* ========== end of script ========== */
+</script>
+
+</body>
+</html>

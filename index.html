@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anime Streaming - Trang Chủ (Wheel Spin)</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="wrap">
+  <div class="header-inner">
+    <div class="header-side left">
+      <div id="hamburgerBtn" class="hamburger-btn" title="Menu">
+        <div class="bars">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+      </div>
+
+      <div id="vipHeaderChip" class="header-chip" style="display:none">👑 <span id="vipRemainSmall" style="margin-left:8px;font-weight:600"></span></div>
+    </div>
+
+    <div class="header-title">Anime Streaming</div>
+
+    <div class="header-side right">
+      <div class="header-chip">🪙 <span id="coinValue">0</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- SIDE PANEL + OVERLAY -->
+<div id="sideOverlay" class="side-overlay" aria-hidden="true"></div>
+<aside id="sidePanel" class="side-panel" aria-hidden="true">
+  <div class="menu-header">
+    <div class="avatar" id="menuAvatar">V</div>
+    <div>
+      <div style="font-weight:800" id="menuUser">Khách</div>
+      <div style="font-size:13px;color:#9fb7c8">Xin chào! (Local)</div>
+    </div>
+  </div>
+
+  <nav class="menu-list" aria-label="Menu chính">
+    <div class="menu-item" data-action="home">🏠 <span>Trang Chủ</span></div>
+    <div class="menu-item" data-action="favorites">💖 <span>Yêu thích</span> <span class="badge" id="menuFavCount">0</span></div>
+    <div class="menu-item" data-action="history">🕘 <span>Lịch sử xem</span> <span class="badge" id="menuHistCount">0</span></div>
+    <div class="menu-item" data-action="following">👥 <span>Theo dõi</span> <span class="badge" id="menuFollowCount">0</span></div>
+
+    <!-- NEW: Vòng quay (mở section) -->
+    <div class="menu-item" data-action="spin">🎡 <span>Vòng quay may mắn</span></div>
+  </nav>
+</aside>
+
+<div class="container wrap">
+
+  <div class="search-box">
+    <div class="search-left">
+      <span>🔍</span>
+      <input id="searchInput" placeholder="Tìm kiếm anime...">
+    </div>
+
+    <div class="search-actions">
+      <button id="openBuy" class="pill-btn primary" title="Mua code VIP">Mua code VIP</button>
+      <button id="openEnter" class="pill-btn ghost" title="Nhập code VIP">Nhập code</button>
+    </div>
+  </div>
+
+  <div class="hint">Mọi anime có tag <strong>👑 VIP</strong> cần kích hoạt mã VIP để xem (nếu bạn chưa có VIP sẽ bị khoá).</div>
+
+  <div id="sectionTitle"> </div>
+
+  <div class="top-actions">
+    <div class="filters" style="flex:1">
+      <select id="genreFilter">
+        <option value="all">Tất cả thể loại</option>
+        <option value="Shoujo Ai">Shoujou Ai</option>
+        <option value="Học đường">Học đường</option>
+        <option value="Music">Music</option>
+        <option value="Lãng mạn">Lãng mạn</option>
+        <option value="Hành động">Hành động</option>
+      </select>
+
+      <select id="sortFilter">
+        <option value="none">Sắp xếp</option>
+        <option value="newest">Mới nhất</option>
+        <option value="oldest">Cũ nhất</option>
+        <option value="rating">Đánh giá cao</option>
+      </select>
+    </div>
+
+    <div style="display:flex;gap:8px;align-items:center">
+      <div class="small-muted">Giá 1 code VIP: <strong id="vipCost">100</strong> xu</div>
+    </div>
+  </div>
+
+  <!-- Main anime grid (kept) -->
+  <div class="anime-grid" id="animeGrid"></div>
+
+  <!-- ===== SPIN SECTION (replaces modal) ===== -->
+  <div id="spinSection" aria-hidden="true">
+    <div id="spinInner">
+      <div id="sectionTitleSpin" style="font-weight:800; font-size:18px; margin:10px 6px;">🎡 Vòng quay may mắn</div>
+      <div class="hint" style="margin-top:0">Chọn 1 vòng quay rồi bấm "Quay". Wheel sẽ xoay thật và trả mã VIP nếu trúng.</div>
+
+      <div style="text-align:center;margin-top:12px">
+        <div id="wheelContainer" aria-hidden="false">
+          <div id="wheel"></div>
+          <div class="wheel-pointer" aria-hidden="true"></div>
+        </div>
+        <div id="wheelLegend" class="wheel-legend" aria-hidden="false"></div>
+      </div>
+
+      <div class="spin-cards-wrap">
+        <div id="spin50" class="spin-card" data-cost="50">
+          <div style="font-weight:800">Vòng 50 xu</div>
+          <div class="prize-list">
+            <div class="prize-item"><span>Không trúng</span><strong>40%</strong></div>
+            <div class="prize-item"><span>VIP 30 phút</span><strong>30%</strong></div>
+            <div class="prize-item"><span>VIP 60 phút</span><strong>20%</strong></div>
+            <div class="prize-item"><span>VIP 120 phút</span><strong>10%</strong></div>
+          </div>
+        </div>
+
+        <div id="spin100" class="spin-card selected" data-cost="100">
+          <div style="font-weight:800">Vòng 100 xu</div>
+          <div class="prize-list">
+            <div class="prize-item"><span>Không trúng</span><strong>38%</strong></div>
+            <div class="prize-item"><span>VIP 60 phút</span><strong>40%</strong></div>
+            <div class="prize-item"><span>VIP 180 phút</span><strong>20%</strong></div>
+            <div class="prize-item"><span>VIP 300 phút</span><strong>2%</strong></div>
+          </div>
+        </div>
+
+        <div id="spin150" class="spin-card" data-cost="150">
+          <div style="font-weight:800">Vòng 150 xu</div>
+          <div class="prize-list">
+            <div class="prize-item"><span>Không trúng</span><strong>43%</strong></div>
+            <div class="prize-item"><span>VIP 120 phút</span><strong>34%</strong></div>
+            <div class="prize-item"><span>VIP 240 phút</span><strong>22%</strong></div>
+            <div class="prize-item"><span>VIP 480 phút</span><strong>1%</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="spin-actions">
+        <button id="spinStartBtn" class="pill-btn primary">Quay</button>
+        <button id="spinCloseBtn" class="pill-btn ghost">Đóng</button>
+      </div>
+
+      <div id="spinResultBlock" style="margin-top:12px;text-align:center;display:none">
+        <div id="spinResultText" style="font-weight:800"></div>
+        <div style="margin-top:8px"><button id="copySpinCode" class="copy-btn" style="display:none">Sao chép mã VIP</button></div>
+      </div>
+
+      <div style="height:18px"></div>
+    </div>
+  </div>
+  <!-- ===== end spin section ===== -->
+
+</div><!-- .container -->
+
+<!-- Buy Modal -->
+<div class="modal-backdrop" id="buyModal">
+  <div class="modal">
+    <h3>Mua code VIP</h3>
+    <div class="row small-muted">Mỗi mã kích hoạt VIP dùng được 1 giờ. Mua sẽ trừ <strong id="modalCost">100</strong> xu.</div>
+
+    <div style="display:flex;gap:8px;margin-bottom:10px">
+      <button id="confirmBuy" class="pill-btn primary">Xác nhận mua (random)</button>
+      <button id="cancelBuy" class="pill-btn ghost">Hủy</button>
+    </div>
+
+    <div id="buyResult" style="display:none">
+      <div class="row small-muted">Mã bạn nhận được (đã chuyển vào "Mã đã mua"):</div>
+      <div class="buy-result">
+        <div id="boughtCode" style="font-weight:700"></div>
+        <div style="display:flex;gap:8px">
+          <button id="copyBought" class="copy-btn">Sao chép</button>
+          <button id="gotoEnter" class="pill-btn">Nhập mã</button>
+        </div>
+      </div>
+      <div class="row small-muted" style="margin-top:10px">Lưu ý: Mã chỉ được kích hoạt khi bạn **nhập mã** ở modal "Nhập mã". Mua không tự kích hoạt VIP.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Enter Modal -->
+<div class="modal-backdrop" id="enterModal">
+  <div class="modal">
+    <h3>Nhập mã VIP</h3>
+    <div class="row">
+      <input id="codeInput" placeholder="Nhập mã... (vd VIP-XXXX-YYYY)" />
+    </div>
+    <div style="display:flex;gap:8px">
+      <button id="confirmEnter" class="pill-btn primary">Xác nhận</button>
+      <button id="cancelEnter" class="pill-btn ghost">Hủy</button>
+    </div>
+    <div id="enterResult" class="row small-muted" style="display:none;margin-top:8px"></div>
+    <div class="row small-muted" style="margin-top:8px">
+      <strong>Mã đã mua:</strong> <span id="purchasedList">—</span>
+    </div>
+  </div>
+</div>
+
+<!-- VIP required modal -->
+<div class="modal-backdrop" id="vipRequiredModal">
+  <div class="modal">
+    <h3>Phim này yêu cầu VIP</h3>
+    <div class="row small-muted" id="vipReqText">Bạn cần kích hoạt VIP để xem bộ phim này.</div>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button id="vipReqBuy" class="pill-btn primary">Mua code ngay</button>
+      <button id="vipReqEnter" class="pill-btn ghost">Nhập mã</button>
+      <button id="vipReqClose" class="pill-btn">Đóng</button>
+    </div>
+  </div>
+</div>
+
+<script src="main.js" type="text/javascript" charset="utf-8"></script>
+ 
+</body>
+</html>
