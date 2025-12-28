@@ -12,7 +12,12 @@
     "followCount": 383,
     "views": 550613,
     "studio": "Studio Lings",
-    "genre": ["Shoujo Ai", "Seinen", "Drama", "Supernatural"],
+    "genre": [
+      "Shoujo Ai",
+      "Seinen",
+      "Drama",
+      "Supernatural"
+    ],
     "vip": false,
     "schedule": {
       "hasSchedule": true,
@@ -23,18 +28,78 @@
     "currentTime": 0,
     "description": "Hinako, một nữ sinh trung học đang sống một cuộc sống yên bình ở một thị trấn ven biển, Hinako luôn cảm thấy mình có phần khác biệt so với bạn bè xung quanh đặc biệt là những tháng hè khi kỉ niệm về gia đình đã mất nhiều năm trước được nhắc lại Một ngày nọ, cô gặp Shiori, một cô gái bí ẩn gợi nhớ đến đại dương, đặc biệt là đôi mắt trong veo màu xanh thẳm. 'Tôi đến đây để ăn cậu. Cho đến khi cậu trưởng thành thật ngon, tôi sẽ bảo vệ cậu'. Liệu đây có phải điềm báo của sự diệt vong?",
     "episodes": [
-      { "ep": 1, "title": "Tập 1: Cô gái muốn chết chờ đợi biển cả", "video": "https://files.catbox.moe/uzj6i4.mp4", "duration": "24:00" },
-      { "ep": 2, "title": "Tập 2: Dã thú hoàng hôn và tiếng nhạc lễ hội", "video": "https://files.catbox.moe/xzexms.mp4", "duration": "24:00" },
-      { "ep": 3, "title": "Tập 3: Biển của hy vọng", "video": "https://files.catbox.moe/55wod4.mp4", "duration": "24:00" },
-      { "ep": 4, "title": "Tập 4: Mối liên kết mong manh", "video": "https://files.catbox.moe/p06tmm.mp4", "duration": "24:00" },
-      { "ep": 5, "title": "Tập 5: Con thú thân thương", "video": "https://files.catbox.moe/fe7qbx.mp4", "duration": "24:00" },
-      { "ep": 6, "title": "Tập 6: Hình dạng của tình yêu", "video": "https://files.catbox.moe/0cag8w.mp4", "duration": "24:00" },
-      { "ep": 7, "title": "Tập 7: Một người tốt bụng", "video": "https://files.catbox.moe/oyfy23.mp4", "duration": "24:00" },
-      { "ep": 8, "title": "Tập 8: Nơi vết nứt bắt đầu", "video": "https://files.catbox.moe/cywxsw.mp4", "duration": "24:00" },
-      { "ep": 9, "title": "Tập 9: Lời cầu nguyện cháy bỏng", "video": "https://files.catbox.moe/7ajhyy.mp4", "duration": "24:00" },
-      { "ep": 10, "title": "Tập 10: Gửi gấm lời cầu nguyện", "video": "https://files.catbox.moe/lolbth.mp4", "duration": "24:00" },
-      { "ep": 11, "title": "Tập 11: Một buổi sáng lạnh giá", "video": "https://files.catbox.moe/luunq3.mp4", "duration": "24:00" },
-      { "ep": 12, "title": "Tập 12: Cô gái dấu yêu", "video": "https://files.catbox.moe/ygf5cf.mp4", "duration": "24:00" }
+      {
+        "ep": 1,
+        "title": "Tập 1: Cô gái muốn chết chờ đợi biển cả",
+        "video": "https://files.catbox.moe/uzj6i4.mp4",
+        "duration": "24:00"
+      },
+      {
+        "ep": 2,
+        "title": "Tập 2: Dã thú hoàng hôn và tiếng nhạc lễ hội",
+        "video": "https://files.catbox.moe/xzexms.mp4",
+        "duration": "24:00"
+      },
+      {
+        "ep": 3,
+        "title": "Tập 3: Biển của hy vọng",
+        "video": "https://files.catbox.moe/55wod4.mp4",
+        "duration": "24:00"
+      },
+      {
+        "ep": 4,
+        "title": "Tập 4: Mối liên kết mong manh",
+        "video": "https://files.catbox.moe/p06tmm.mp4",
+        "duration": "24:00"
+      },
+      {
+        "ep": 5,
+        "title": "Tập 5: Con thú thân thương",
+        "video": "https://files.catbox.moe/fe7qbx.mp4",
+        "duration": "24:00"
+      },
+      {
+        "ep": 6,
+        "title": "Tập 6: Hình dạng của tình yêu",
+        "video": "https://files.catbox.moe/0cag8w.mp4",
+        "duration": "24:00"
+      },
+      {
+        "ep": 7,
+        "title": "Tập 7: Một người tốt bụng",
+        "video": "https://files.catbox.moe/oyfy23.mp4",
+        "duration": "24:00"
+      },
+      {
+        "ep": 8,
+        "title": "Tập 8: Nơi vết nứt bắt đầu",
+        "video": "https://files.catbox.moe/cywxsw.mp4",
+        "duration": "24:00"
+      },
+      {
+        "ep": 9,
+        "title": "Tập 9: Lời cầu nguyện cháy bỏng",
+        "video": "https://files.catbox.moe/7ajhyy.mp4",
+        "duration": "24:00"
+      },
+      {
+        "ep": 10,
+        "title": "Tập 10: Gửi gấm lời cầu nguyện",
+        "video": "https://files.catbox.moe/lolbth.mp4",
+        "duration": "24:00"
+      },
+      {
+        "ep": 11,
+        "title": "Tập 11: Một buổi sáng lạnh giá",
+        "video": "https://files.catbox.moe/luunq3.mp4",
+        "duration": "24:00"
+      },
+      {
+        "ep": 12,
+        "title": "Tập 12: Cô gái dấu yêu",
+        "video": "https://files.catbox.moe/ygf5cf.mp4",
+        "duration": "24:00"
+      }
     ]
   },
   "miku": {
@@ -50,7 +115,11 @@
     "followCount": 1293,
     "views": 784000,
     "studio": "P.A Works",
-    "genre": ["Anime lẻ", "Sci-Fi", "Music"],
+    "genre": [
+      "Anime lẻ",
+      "Sci-Fi",
+      "Music"
+    ],
     "vip": true,
     "schedule": {
       "hasSchedule": false,
@@ -77,12 +146,15 @@
     "uploadISO": "2016-08-26",
     "year": 2016,
     "rating": 90,
-    "score": 9.0,
+    "score": 9,
     "status": "Movie",
     "followCount": 9984,
     "views": 2120000,
     "studio": "CoMix Wave Films",
-    "genre": ["Lãng mạn", "Giả tưởng"],
+    "genre": [
+      "Lãng mạn",
+      "Giả tưởng"
+    ],
     "vip": false,
     "schedule": {
       "hasSchedule": false,
@@ -109,12 +181,19 @@
     "uploadISO": "2021-04-09",
     "year": 2021,
     "rating": 96,
-    "score": 9.0,
+    "score": 9,
     "status": "Hoàn thành",
     "followCount": 9984,
     "views": 1923599,
     "studio": "Brain's Base",
-    "genre": ["Anime bộ", "Shounen", "Supernatural", "Fantasy", "Drama", "Adventure"],
+    "genre": [
+      "Anime bộ",
+      "Shounen",
+      "Supernatural",
+      "Fantasy",
+      "Drama",
+      "Adventure"
+    ],
     "vip": false,
     "schedule": {
       "hasSchedule": false,
@@ -130,26 +209,126 @@
         "name": "Phần 1 (2021)",
         "poster": "https://www.dropbox.com/scl/fi/llyh3drlhy9dms35p8i31/FumetsunoAnatae.jpg?rlkey=rbvptevg9spohzlpqq02kpyoc&st=qxnnfr9o&dl=1",
         "episodes": [
-          { "ep": 1, "title": "Tập 1", "video": "https://www.dropbox.com/scl/fi/kip1gub1c2nccnbgdhf9a/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-1-Ani-One-Vietnam.mp4?rlkey=x1d80wggfzr77zuqqa1hrszd8&st=vjvk5jam&dl=1", "duration": "25:00" },
-          { "ep": 2, "title": "Tập 2", "video": "https://www.dropbox.com/scl/fi/j2a52zq31obl47ufv8nj4/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-2-Ani-One-Vietnam.mp4?rlkey=1775d6iu9w3qrcp5r5m4tnqv7&st=92z2svq4&dl=1", "duration": "25:00" },
-          { "ep": 3, "title": "Tập 3", "video": "https://www.dropbox.com/scl/fi/40285dl2an4g88hohwvdp/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-3-Ani-One-Vietnam.mp4?rlkey=n4h9ah37qq9er9nkp15u1rtoj&st=of7b5mit&dl=1", "duration": "25:00" },
-          { "ep": 4, "title": "Tập 4", "video": "https://www.dropbox.com/scl/fi/1g5da0u7z60u9n2m7jrcj/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-4-Ani-One-Vietnam.mp4?rlkey=765bcvyf5elsq9cxl7plz4j8t&st=24e4iofo&dl=1", "duration": "25:00" },
-          { "ep": 5, "title": "Tập 5", "video": "https://www.dropbox.com/scl/fi/h5org7tuebdqrnoj1omr0/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-5-Ani-One-Vietnam.mp4?rlkey=5vgx4p1tmiohrfyi2n5r78syj&st=t70neixz&dl=1", "duration": "25:00" },
-          { "ep": 6, "title": "Tập 6", "video": "https://www.dropbox.com/scl/fi/vc26a0wabath5ya092a8p/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-6-Ani-One-Vietnam.mp4?rlkey=kk2q2dsfmm1yvb82o0vds683v&st=h4btqax1&dl=1", "duration": "25:00" },
-          { "ep": 7, "title": "Tập 7", "video": "https://www.dropbox.com/scl/fi/41fg9y7fdkt3u5wq32bsb/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-7-Ani-One-Vietnam.mp4?rlkey=8outww2ou3n4rtrogt6lyv1fl&st=hvztn05y&dl=1", "duration": "25:00" },
-          { "ep": 8, "title": "Tập 8", "video": "https://www.dropbox.com/scl/fi/k46lgtu2kxchjn2hhas54/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-8-Ani-One-Vietnam.mp4?rlkey=qy2drc74b91oec7e6yj3ss2pn&st=iteddui8&dl=1", "duration": "25:00" },
-          { "ep": 9, "title": "Tập 9", "video": "https://www.dropbox.com/scl/fi/akqmkj8br8woz84q6lp11/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-9-Ani-One-Vietnam.mp4?rlkey=3v6adbn4ob8st9hcoqhrw2iud&st=di5uia0m&dl=1", "duration": "25:00" },
-          { "ep": 10, "title": "Tập 10", "video": "https://www.dropbox.com/scl/fi/xhvqeya7g0k2anxc94bsl/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-10-Ani-One-Vietnam.mp4?rlkey=zyi25cqhd3qv06ngq8kbvhyxp&st=qofsp2dg&dl=1", "duration": "25:00" },
-          { "ep": 11, "title": "Tập 11", "video": "https://www.dropbox.com/scl/fi/v55906q8z3rzlxhk0gcei/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-11-Ani-One-Vietnam.mp4?rlkey=bzh4sfnzhdcy9myg9qwj21d7u&st=ps4av74g&dl=1", "duration": "25:00" },
-          { "ep": 12, "title": "Tập 12", "video": "https://www.dropbox.com/scl/fi/la8v82b5q222l5by8y691/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-12-Ani-One-Vietnam.mp4?rlkey=7lpiqa2gpovjz0pp3ne4yzhv3&st=u7pzfsba&dl=1", "duration": "25:00" },
-          { "ep": 13, "title": "Tập 13", "video": "https://www.dropbox.com/scl/fi/4oc4pydm8pbcev61akw30/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-13-Ani-One-Vietnam.mp4?rlkey=0vm3a1yd0dgajr0std1kf75vy&st=gl4b36pn&dl=1", "duration": "25:00" },
-          { "ep": 14, "title": "Tập 14", "video": "https://www.dropbox.com/scl/fi/rxt9se2bpccsxh564sd50/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-14-Ani-One-Vietnam.mp4?rlkey=p7etdp6edmx30vtsr46in3ef1&st=dckaxgce&dl=1", "duration": "25:00" },
-          { "ep": 15, "title": "Tập 15", "video": "https://www.dropbox.com/scl/fi/sio44h2hzta8y2yksa6o3/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-15-Ani-One-Vietnam.mp4?rlkey=jpvwf0ttpacmxbdzlom9id389&st=p8h7gcsi&dl=1", "duration": "25:00" },
-          { "ep": 16, "title": "Tập 16", "video": "https://www.dropbox.com/scl/fi/att63sgql0vyoj833czva/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-16-Ani-One-Vietnam.mp4?rlkey=aucdcuydz47wo4jfq21o5cq8t&st=jbt0595z&dl=1", "duration": "25:00" },
-          { "ep": 17, "title": "Tập 17", "video": "https://www.dropbox.com/scl/fi/xxk5r29vsbs3gc6wttwp4/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-17-Ani-One-Vietnam.mp4?rlkey=b7ctwzh7p9tkoxci80etieb45&st=6z9djyo5&dl=1", "duration": "25:00" },
-          { "ep": 18, "title": "Tập 18", "video": "https://www.dropbox.com/scl/fi/kefpam7legyuln48uaxpx/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-18-Ani-One-Vietnam.mp4?rlkey=5sool6op7db8qv9i3yueruuo8&st=m70zh17q&dl=1", "duration": "25:00" },
-          { "ep": 19, "title": "Tập 19", "video": "https://www.dropbox.com/scl/fi/naw1yuqx4oeuwuw7w4yjl/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-19-Ani-One-Vietnam.mp4?rlkey=sxr3r4w7cxl45v16tswh4w1r8&st=un1yf2m9&dl=1", "duration": "25:00" },
-          { "ep": 20, "title": "Tập 20", "video": "https://www.dropbox.com/scl/fi/cs46yo8is80fb3g7vxxyv/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-20-Ani-One-Vietnam.mp4?rlkey=8aao55zudoe8kw79opgjcstlj&st=jaahbtfb&dl=1", "duration": "25:00" }
+          {
+            "ep": 1,
+            "title": "Tập 1",
+            "video": "https://www.dropbox.com/scl/fi/kip1gub1c2nccnbgdhf9a/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-1-Ani-One-Vietnam.mp4?rlkey=x1d80wggfzr77zuqqa1hrszd8&st=vjvk5jam&dl=1",
+            "duration": "25:00"
+          },
+          {
+            "ep": 2,
+            "title": "Tập 2",
+            "video": "https://www.dropbox.com/scl/fi/j2a52zq31obl47ufv8nj4/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-2-Ani-One-Vietnam.mp4?rlkey=1775d6iu9w3qrcp5r5m4tnqv7&st=92z2svq4&dl=1",
+            "duration": "25:00"
+          },
+          {
+            "ep": 3,
+            "title": "Tập 3",
+            "video": "https://www.dropbox.com/scl/fi/40285dl2an4g88hohwvdp/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-3-Ani-One-Vietnam.mp4?rlkey=n4h9ah37qq9er9nkp15u1rtoj&st=of7b5mit&dl=1",
+            "duration": "25:00"
+          },
+          {
+            "ep": 4,
+            "title": "Tập 4",
+            "video": "https://www.dropbox.com/scl/fi/1g5da0u7z60u9n2m7jrcj/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-4-Ani-One-Vietnam.mp4?rlkey=765bcvyf5elsq9cxl7plz4j8t&st=24e4iofo&dl=1",
+            "duration": "25:00"
+          },
+          {
+            "ep": 5,
+            "title": "Tập 5",
+            "video": "https://www.dropbox.com/scl/fi/h5org7tuebdqrnoj1omr0/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-5-Ani-One-Vietnam.mp4?rlkey=5vgx4p1tmiohrfyi2n5r78syj&st=t70neixz&dl=1",
+            "duration": "25:00"
+          },
+          {
+            "ep": 6,
+            "title": "Tập 6",
+            "video": "https://www.dropbox.com/scl/fi/vc26a0wabath5ya092a8p/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-6-Ani-One-Vietnam.mp4?rlkey=kk2q2dsfmm1yvb82o0vds683v&st=h4btqax1&dl=1",
+            "duration": "25:00"
+          },
+          {
+            "ep": 7,
+            "title": "Tập 7",
+            "video": "https://www.dropbox.com/scl/fi/41fg9y7fdkt3u5wq32bsb/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-7-Ani-One-Vietnam.mp4?rlkey=8outww2ou3n4rtrogt6lyv1fl&st=hvztn05y&dl=1",
+            "duration": "25:00"
+          },
+          {
+            "ep": 8,
+            "title": "Tập 8",
+            "video": "https://www.dropbox.com/scl/fi/k46lgtu2kxchjn2hhas54/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-8-Ani-One-Vietnam.mp4?rlkey=qy2drc74b91oec7e6yj3ss2pn&st=iteddui8&dl=1",
+            "duration": "25:00"
+          },
+          {
+            "ep": 9,
+            "title": "Tập 9",
+            "video": "https://www.dropbox.com/scl/fi/akqmkj8br8woz84q6lp11/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-9-Ani-One-Vietnam.mp4?rlkey=3v6adbn4ob8st9hcoqhrw2iud&st=di5uia0m&dl=1",
+            "duration": "25:00"
+          },
+          {
+            "ep": 10,
+            "title": "Tập 10",
+            "video": "https://www.dropbox.com/scl/fi/xhvqeya7g0k2anxc94bsl/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-10-Ani-One-Vietnam.mp4?rlkey=zyi25cqhd3qv06ngq8kbvhyxp&st=qofsp2dg&dl=1",
+            "duration": "25:00"
+          },
+          {
+            "ep": 11,
+            "title": "Tập 11",
+            "video": "https://www.dropbox.com/scl/fi/v55906q8z3rzlxhk0gcei/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-11-Ani-One-Vietnam.mp4?rlkey=bzh4sfnzhdcy9myg9qwj21d7u&st=ps4av74g&dl=1",
+            "duration": "25:00"
+          },
+          {
+            "ep": 12,
+            "title": "Tập 12",
+            "video": "https://www.dropbox.com/scl/fi/la8v82b5q222l5by8y691/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-12-Ani-One-Vietnam.mp4?rlkey=7lpiqa2gpovjz0pp3ne4yzhv3&st=u7pzfsba&dl=1",
+            "duration": "25:00"
+          },
+          {
+            "ep": 13,
+            "title": "Tập 13",
+            "video": "https://www.dropbox.com/scl/fi/4oc4pydm8pbcev61akw30/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-13-Ani-One-Vietnam.mp4?rlkey=0vm3a1yd0dgajr0std1kf75vy&st=gl4b36pn&dl=1",
+            "duration": "25:00"
+          },
+          {
+            "ep": 14,
+            "title": "Tập 14",
+            "video": "https://www.dropbox.com/scl/fi/rxt9se2bpccsxh564sd50/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-14-Ani-One-Vietnam.mp4?rlkey=p7etdp6edmx30vtsr46in3ef1&st=dckaxgce&dl=1",
+            "duration": "25:00"
+          },
+          {
+            "ep": 15,
+            "title": "Tập 15",
+            "video": "https://www.dropbox.com/scl/fi/sio44h2hzta8y2yksa6o3/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-15-Ani-One-Vietnam.mp4?rlkey=jpvwf0ttpacmxbdzlom9id389&st=p8h7gcsi&dl=1",
+            "duration": "25:00"
+          },
+          {
+            "ep": 16,
+            "title": "Tập 16",
+            "video": "https://www.dropbox.com/scl/fi/att63sgql0vyoj833czva/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-16-Ani-One-Vietnam.mp4?rlkey=aucdcuydz47wo4jfq21o5cq8t&st=jbt0595z&dl=1",
+            "duration": "25:00"
+          },
+          {
+            "ep": 17,
+            "title": "Tập 17",
+            "video": "https://www.dropbox.com/scl/fi/xxk5r29vsbs3gc6wttwp4/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-17-Ani-One-Vietnam.mp4?rlkey=b7ctwzh7p9tkoxci80etieb45&st=6z9djyo5&dl=1",
+            "duration": "25:00"
+          },
+          {
+            "ep": 18,
+            "title": "Tập 18",
+            "video": "https://www.dropbox.com/scl/fi/kefpam7legyuln48uaxpx/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-18-Ani-One-Vietnam.mp4?rlkey=5sool6op7db8qv9i3yueruuo8&st=m70zh17q&dl=1",
+            "duration": "25:00"
+          },
+          {
+            "ep": 19,
+            "title": "Tập 19",
+            "video": "https://www.dropbox.com/scl/fi/naw1yuqx4oeuwuw7w4yjl/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-19-Ani-One-Vietnam.mp4?rlkey=sxr3r4w7cxl45v16tswh4w1r8&st=un1yf2m9&dl=1",
+            "duration": "25:00"
+          },
+          {
+            "ep": 20,
+            "title": "Tập 20",
+            "video": "https://www.dropbox.com/scl/fi/cs46yo8is80fb3g7vxxyv/G-i-Em-Ng-i-B-t-T-To-Your-Eternity-_-B-n-L-NG-TI-NG-_-T-p-20-Ani-One-Vietnam.mp4?rlkey=8aao55zudoe8kw79opgjcstlj&st=jaahbtfb&dl=1",
+            "duration": "25:00"
+          }
         ]
       },
       {
@@ -157,14 +336,269 @@
         "name": "Phần 2 (2022)",
         "poster": "https://www.dropbox.com/scl/fi/mtjcu20f4pnf2ixp2nkl8/animevsub-nXf3I3b2RN.jpg?rlkey=jjnuq7c7fphtcier0pclnfx3j&st=3dlsn12p&dl=1",
         "episodes": [
-          { "ep": 1, "title": "Tập 1", "video": "https://www.dropbox.com/scl/fi/sdp3sjjtmta98waek5zp3/FumetsunoAnatae-1.mp4?rlkey=ejmlyoosamzi3r12f6mxsx72t&st=n80ktbnv&dl=1", "duration": "25:00" },
-          { "ep": 2, "title": "Tập 2", "video": "https://www.dropbox.com/scl/fi/u59x1g2awyr95visgcuue/FumetsunoAnatae-2.mp4?rlkey=nafrg2vh7bgqe3eglnegc7bh3&st=0oge2efv&dl=1", "duration": "25:00" },
-          { "ep": 3, "title": "Tập 3", "video": "https://www.dropbox.com/scl/fi/mdfg6ixs40kkctlj332ry/FumetsunoAnatae-3.mp4?rlkey=cp7jdgzhh0zbjernq8tk4oije&st=i3ylktqw&dl=1", "duration": "25:00" },
-          { "ep": 4, "title": "Tập 4", "video": "https://www.dropbox.com/scl/fi/8qzfarczpia3z42jwxw1d/FumetsunoAnatae-4.mp4?rlkey=y5bdr0ll7y4vfofnwn6igyscw&st=tthylwxy&dl=1", "duration": "25:00" },
-          { "ep": 5, "title": "Tập 5", "video": "https://www.dropbox.com/scl/fi/12ck9yjacjhddj97s0asz/FumetsunoAnatae-5.mp4?rlkey=8etb7sknms67nlz5u0o1lt5s5&st=g8yeyvfu&dl=1", "duration": "25:00" },
-          { "ep": 6, "title": "Tập 6", "video": "https://www.dropbox.com/scl/fi/bq26la2laatvl7dfgbdlc/FumetsunoAnatae-6.mp4?rlkey=u6385pd3nh3phyujthq9d5opq&st=sq39mbhg&dl=1", "duration": "25:00" }, 
-          { "ep": 7, "title": "Tập 7", "video": "https://www.dropbox.com/scl/fi/udq382edboee30qdu7rng/FumetsunoAnatae-7.mp4?rlkey=c1ycdf0sb9jvyewlaz7ryantt&st=nwh5xwze&dl=1", "duration": "25:00" },
-          { "ep": 8, "title": "Tập 8", "video": "https://www.dropbox.com/scl/fi/esbpoy9jdztmtqb5if3on/FumetsunoAnatae-8.mp4?rlkey=cexd45suyujte06bfqbq1mcyx&st=xh9c8tm3&dl=1", "duration": "25:00" }
+          {
+            "ep": 1,
+            "title": "Tập 1",
+            "video": "https://www.dropbox.com/scl/fi/sdp3sjjtmta98waek5zp3/FumetsunoAnatae-1.mp4?rlkey=ejmlyoosamzi3r12f6mxsx72t&st=n80ktbnv&dl=1",
+            "duration": "25:00"
+          },
+          {
+            "ep": 2,
+            "title": "Tập 2",
+            "video": "https://www.dropbox.com/scl/fi/u59x1g2awyr95visgcuue/FumetsunoAnatae-2.mp4?rlkey=nafrg2vh7bgqe3eglnegc7bh3&st=0oge2efv&dl=1",
+            "duration": "25:00"
+          },
+          {
+            "ep": 3,
+            "title": "Tập 3",
+            "video": "https://www.dropbox.com/scl/fi/mdfg6ixs40kkctlj332ry/FumetsunoAnatae-3.mp4?rlkey=cp7jdgzhh0zbjernq8tk4oije&st=i3ylktqw&dl=1",
+            "duration": "25:00"
+          },
+          {
+            "ep": 4,
+            "title": "Tập 4",
+            "video": "https://www.dropbox.com/scl/fi/8qzfarczpia3z42jwxw1d/FumetsunoAnatae-4.mp4?rlkey=y5bdr0ll7y4vfofnwn6igyscw&st=tthylwxy&dl=1",
+            "duration": "25:00"
+          },
+          {
+            "ep": 5,
+            "title": "Tập 5",
+            "video": "https://www.dropbox.com/scl/fi/12ck9yjacjhddj97s0asz/FumetsunoAnatae-5.mp4?rlkey=8etb7sknms67nlz5u0o1lt5s5&st=g8yeyvfu&dl=1",
+            "duration": "25:00"
+          },
+          {
+            "ep": 6,
+            "title": "Tập 6",
+            "video": "https://www.dropbox.com/scl/fi/bq26la2laatvl7dfgbdlc/FumetsunoAnatae-6.mp4?rlkey=u6385pd3nh3phyujthq9d5opq&st=sq39mbhg&dl=1",
+            "duration": "25:00"
+          },
+          {
+            "ep": 7,
+            "title": "Tập 7",
+            "video": "https://www.dropbox.com/scl/fi/udq382edboee30qdu7rng/FumetsunoAnatae-7.mp4?rlkey=c1ycdf0sb9jvyewlaz7ryantt&st=nwh5xwze&dl=1",
+            "duration": "25:00"
+          },
+          {
+            "ep": 8,
+            "title": "Tập 8",
+            "video": "https://www.dropbox.com/scl/fi/esbpoy9jdztmtqb5if3on/FumetsunoAnatae-8.mp4?rlkey=cexd45suyujte06bfqbq1mcyx&st=xh9c8tm3&dl=1",
+            "duration": "25:00"
+          }
+        ]
+      }
+    ]
+  },
+  "chichiwaeiyuu": {
+    "id": "chichiwaeiyuu",
+    "title": "Chichi wa Eiyuu, Haha wa Seirei, Musume no Watashi wa Tenseisha.",
+    "subtitle": "Dad is a Hero, Mom is a Spirit, I'm a Reincarnator, Reincarnated as the Daughter of the Legendary Hero and the Queen of Spirits, Hahanoha",
+    "poster": "https://www.dropbox.com/scl/fi/fsfasd4n8tj7amtp7usw6/animevsub-w7r1nrP6wZ.jpg?rlkey=3pwvbdl7xvm3xr16ygnxs3pdx&st=hs3tbj9u&dl=1",
+    "uploadISO": "2025-12-24",
+    "year": 2025,
+    "rating": 91,
+    "score": 6.7,
+    "status": "Hoàn thành",
+    "followCount": 0,
+    "views": 0,
+    "studio": "J.C.Staff",
+    "genre": [
+      "Anime bộ",
+      "Suspense",
+      "Fantasy"
+    ],
+    "vip": true,
+    "schedule": {
+      "hasSchedule": false,
+      "nextEpisode": null,
+      "nextDate": null
+    },
+    "currentEp": 1,
+    "currentTime": 0,
+    "description": "Tôi là một người chuyển sinh, papa của tôi từng là một anh hùng còn mama chính là nữ hoàng của các vị thần. Với kiến thức của tiền kiếp, tôi mang trong mình một nguồn sức mạnh về chúng…Tôi sẽ bảo vệ gia đình của tôi.",
+    "episodes": [
+      {
+        "ep": 1,
+        "title": "Tập 1",
+        "video": "https://www.dropbox.com/scl/fi/pbylwrv7nh4kxi8gc1l0m/chichiwaeiyuu-1.mp4?rlkey=sylxayp76bcpbr6o4lj4a6p64&st=dp2mogjt&dl=1",
+        "duration": "24:00"
+      },
+      {
+        "ep": 2,
+        "title": "Tập 2",
+        "video": "https://www.dropbox.com/scl/fi/h9b8u025yvue9xhqoa3uy/chichiwaeiyuu-2.mp4?rlkey=o0wpmdngd89m3nehpbde0pzy7&st=03elmj1e&dl=1",
+        "duration": "24:00"
+      },
+      {
+        "ep": 3,
+        "title": "Tập 3",
+        "video": "https://www.dropbox.com/scl/fi/zaapfhyry5vgndnh6dk9a/chichiwaeiyuu-3.mp4?rlkey=wwj5ns9e7qq1ttdts4uekftqq&st=iqyevbyr&dl=1",
+        "duration": "24:00"
+      },
+      {
+        "ep": 4,
+        "title": "Tập 4",
+        "video": "https://www.dropbox.com/scl/fi/im1idyp2v87wxgfjqmmxs/chichiwaeiyuu-4.mp4?rlkey=7zdim83xse6ido47eeaz5pc61&st=pnbz03mm&dl=1",
+        "duration": "24:00"
+      },
+      {
+        "ep": 5,
+        "title": "Tập 5",
+        "video": "https://www.dropbox.com/scl/fi/exeqmumh0967mdbrlm0nr/chichiwaeiyuu-5.mp4?rlkey=am95jq4bh87zaahner7fvl3rc&st=x14k47kr&dl=1",
+        "duration": "24:00"
+      },
+      {
+        "ep": 6,
+        "title": "Tập 6",
+        "video": "https://www.dropbox.com/scl/fi/geuetbsmjrefh867x52ru/chichiwaeiyuu-6.mp4?rlkey=jbsqkzlqn10935wk6p9li0h2e&st=zn3ij9mg&dl=1",
+        "duration": "24:00"
+      },
+      {
+        "ep": 7,
+        "title": "Tập 7",
+        "video": "https://www.dropbox.com/scl/fi/ap0aqzzwq3fokm0d395a4/chichiwaeiyuu-7.mp4?rlkey=tldj9y9zlzun34a4xehmhfyra&st=z1o63h08&dl=1",
+        "duration": "24:00"
+      },
+      {
+        "ep": 8,
+        "title": "Tập 8",
+        "video": "https://www.dropbox.com/scl/fi/hmqyrlxqkfnu5qpr9scad/chichiwaeiyuu-8.mp4?rlkey=y9zqzuxe5z0sbof60eivqnprs&st=92ddnudd&dl=1",
+        "duration": "24:00"
+      },
+      {
+        "ep": 9,
+        "title": "Tập 9",
+        "video": "https://www.dropbox.com/scl/fi/xshykgo0eqyumekwr1eeb/chichiwaeiyuu-9.mp4?rlkey=g789pkffvjuinfy4t9scredp0&st=qaw2pcmr&dl=1",
+        "duration": "24:00"
+      },
+      {
+        "ep": 10,
+        "title": "Tập 10",
+        "video": "https://www.dropbox.com/scl/fi/vku9yeb51ewt8sdd34r1c/chichiwaeiyuu-10.mp4?rlkey=k7s8is0abum9hl6ma4k9cahr7&st=ei3kob17&dl=1",
+        "duration": "24:00"
+      },
+      {
+        "ep": 11,
+        "title": "Tập 11",
+        "video": "https://www.dropbox.com/scl/fi/dvmvpddtf3ciko6end6db/chichiwaeiyuu-11.mp4?rlkey=deit7w7fujoqty3kklc8n7924&st=oshltwj0&dl=1",
+        "duration": "24:00"
+      },
+      {
+        "ep": 12,
+        "title": "Tập 12",
+        "video": "https://www.dropbox.com/scl/fi/xwkjvywluw3svkptmzwv6/chichiwaeiyuu-12.mp4?rlkey=ojhuv1ijspdihoqynbpn7hhp6&st=2g4og8xb&dl=1",
+        "duration": "24:00"
+      }
+    ]
+  },
+  "Datealive": {
+    "id": "Datealive",
+    "title": "Date A Live",
+    "subtitle": "Date A Live",
+    "poster": "https://www.dropbox.com/scl/fi/8jcdqhk3e47g9ecd5pdm8/animevsub-44844.jpg?rlkey=je3zf8cyqhpiptrtpnpj1wzyr&st=31b0b9b4&dl=1",
+    "uploadISO": "2025-12-26",
+    "year": 2013,
+    "rating": 94,
+    "score": 7.14,
+    "status": "Hoàn thành",
+    "followCount": 0,
+    "views": 0,
+    "studio": "AIC Plus+",
+    "genre": [
+      "Anime bộ",
+      "Sci-Fi",
+      "School",
+      "Romance",
+      "Harem",
+      "Comedy",
+      "Mecha"
+    ],
+    "vip": false,
+    "schedule": {
+      "hasSchedule": false,
+      "nextEpisode": null,
+      "nextDate": null
+    },
+    "currentEp": 1,
+    "currentTime": 0,
+    "description": "Trước khi tận thế , hãy giết hoặc hôn em đi 30 năm trước, một hiện tượng kỳ lạ được gọi là \"không gian chấn\" đã tàn phá trung tâm của lục địa Á-Âu, đe dọa mạng sống của ít nhất 150 triệu người. Từ đó, những trận không chấn nhỏ hơn đã làm thế giới trở nên bất thường.Itsuka Shidou là một học sinh trung học bình thường. Thế nhưng, trong ngày đầu tiên đi học trở lại sau kỳ nghỉ xuân, một đợt không gian chấn giáng xuống thành phố. Shidou, đi tìm em gái trong thiên tai, đã gặp gỡ một cô gái cầm trọng kiếm sau một cơn không gian chấn.Em gái của Shidou, Kotori, sau đó tiết lộ với cậu cô gái đó là một sinh vật gọi là tinh linh và là nguyên nhân gây ra các đợt không gian chấn. Đồng thời Kotori cũng tiết lộ mình là một trong những lãnh đạo của tổ chức Ratatoskr có nhiệm vụ ngăn chặn những hiểm họa tinh linh. Sau đó cô mời Shidou gia nhập tổ chức với nhiệm vụ phong ấn năng lượng của các tinh linh. Với điều kiện tiên quyết là cậu phải hẹn hò với các cô gái và khiến họ yêu cậu.",
+    "seasons": [
+      {
+        "season": 1,
+        "name": "Phần 1",
+        "poster": "https://www.dropbox.com/scl/fi/8jcdqhk3e47g9ecd5pdm8/animevsub-44844.jpg?rlkey=je3zf8cyqhpiptrtpnpj1wzyr&st=31b0b9b4&dl=1",
+        "episodes": [
+          {
+            "ep": 1,
+            "title": "Tập 1",
+            "video": "https://www.dropbox.com/scl/fi/mhd6zss3v6yiqeokfphmq/Date-a-Live-1.mp4?rlkey=d7atvfshowpwy7y01mq9f5r91&st=4j0555h3&dl=1",
+            "duration": "25:00"
+          },
+          {
+            "ep": 2,
+            "title": "Tập 2",
+            "video": "https://www.dropbox.com/scl/fi/dz1sy9wmsh79c8ytku4dr/Date-a-Live-2.mp4?rlkey=0w1g28qdl86ujzcmfsupqudrq&st=rrb1i91c&dl=1",
+            "duration": "24:00"
+          },
+          {
+            "ep": 3,
+            "title": "Tập 3",
+            "video": "https://www.dropbox.com/scl/fi/msvcba3nhyhpyjitri5jw/Date-a-Live-3.mp4?rlkey=rk3gujsijg3vd8srz4i4xs167&st=27cqba9e&dl=1",
+            "duration": "24:00"
+          },
+          {
+            "ep": 4,
+            "title": "Tập 4",
+            "video": "https://www.dropbox.com/scl/fi/rhx7j4il400okxkouj0df/Date-a-Live-4.mp4?rlkey=i3g5a62meqt0ywaw29t1ylbxv&st=rfr7mg24&dl=1",
+            "duration": "24:00"
+          },
+          {
+            "ep": 5,
+            "title": "Tập 5",
+            "video": "https://www.dropbox.com/scl/fi/p7blym5fi7zti795ksu2y/Date-a-Live-5.mp4?rlkey=ej4dqe4pcf1sq7rmd0lzwax4o&st=rc5eg711&dl=1",
+            "duration": "24:00"
+          },
+          {
+            "ep": 6,
+            "title": "Tập 6",
+            "video": "https://www.dropbox.com/scl/fi/xe72dpt19prdejs8tsc98/Date-a-Live-6.mp4?rlkey=6xqp3esynqlcelgpalhcfr4pm&st=67md9fa9&dl=1",
+            "duration": "24:00"
+          },
+          {
+            "ep": 7,
+            "title": "Tập 7",
+            "video": "https://www.dropbox.com/scl/fi/31gi425e8fsdng7lllxbh/Date-a-Live-7.mp4?rlkey=s22xd8plop51uy9mwm0r8toos&st=fe2cv87j&dl=1",
+            "duration": "24:00"
+          },
+          {
+            "ep": 8,
+            "title": "Tập 8",
+            "video": "https://www.dropbox.com/scl/fi/63j7izu9gkjfyy7smgxsy/Date-a-Live-8.mp4?rlkey=kwebgd55ukmv52omg1trvqjj1&st=drvn0cvt&dl=1",
+            "duration": "24:00"
+          },
+          {
+            "ep": 9,
+            "title": "Tập 9",
+            "video": "https://www.dropbox.com/scl/fi/9y5yzo3xcuqwzhx29vuxw/Date-a-Live-9.mp4?rlkey=vpjq36jslms04i06tr67m9xfq&st=96fhfik4&dl=1",
+            "duration": "24:00"
+          },
+          {
+            "ep": 10,
+            "title": "Tập 10",
+            "video": "https://www.dropbox.com/scl/fi/a34mjqv2ml56yb4ni7men/Date-a-Live-10.mp4?rlkey=wlgligdgr3lrpu46l035nv3lc&st=xmeqbnv9&dl=1",
+            "duration": "24:00"
+          },
+          {
+            "ep": 11,
+            "title": "Tập 11",
+            "video": "https://www.dropbox.com/scl/fi/sjt3m81esgfgq20uo5kvj/Date-a-Live-11.mp4?rlkey=gre94lbfk963hfpvn1xqrc5n5&st=qk7vqeke&dl=1",
+            "duration": "24:00"
+          },
+          {
+            "ep": 12,
+            "title": "Tập 12",
+            "video": "https://www.dropbox.com/scl/fi/r0o06ump6ksjb29gm9fwc/Date-a-Live-12.mp4?rlkey=gxqnubr8gzaoyomo43twcdiyx&st=dif42s60&dl=1",
+            "duration": "24:00"
+          }
         ]
       }
     ]
